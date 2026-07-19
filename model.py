@@ -45,8 +45,19 @@ def build_itos(vocab: list[str]) -> dict[int, str]:
     """
     return {idx: char for idx, char in enumerate(vocab)}
 
-# Step 4 - encode_char (not yet solved)
-# TODO: implement
+# Step 4 - encode_char
+def encode_char(ch: str, stoi: dict[str, int]) -> int:
+    """
+    Encode a single character into its token ID.
+
+    Args:
+        ch (str): Character to encode.
+        stoi (dict[str, int]): Character-to-index mapping.
+
+    Returns:
+        int: Token ID for the character.
+    """
+    return stoi[ch]
 
 # Step 5 - encode_string (not yet solved)
 # TODO: implement
