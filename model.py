@@ -32,8 +32,18 @@ def build_stoi(vocab: list[str]) -> dict[str, int]:
     """
     return {char: idx for idx, char in enumerate(vocab)}
 
-# Step 3 - build_itos (not yet solved)
-# TODO: implement
+# Step 3 - build_itos
+def build_itos(vocab: list[str]) -> dict[int, str]:
+    """
+    Build an index-to-string mapping from a vocabulary list.
+
+    Args:
+        vocab (list[str]): List of unique characters.
+
+    Returns:
+        dict[int, str]: Mapping from index to character.
+    """
+    return {idx: char for idx, char in enumerate(vocab)}
 
 # Step 4 - encode_char (not yet solved)
 # TODO: implement
