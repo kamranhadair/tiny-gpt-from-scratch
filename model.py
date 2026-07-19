@@ -19,8 +19,18 @@ def build_vocab(text: str) -> list[str]:
     """
     return sorted(set(text))
 
-# Step 2 - build_stoi (not yet solved)
-# TODO: implement
+# Step 2 - build_stoi
+def build_stoi(vocab: list[str]) -> dict[str, int]:
+    """
+    Build a string-to-index mapping from a vocabulary list.
+
+    Args:
+        vocab (list[str]): List of unique characters.
+
+    Returns:
+        dict[str, int]: Mapping from character to its index.
+    """
+    return {char: idx for idx, char in enumerate(vocab)}
 
 # Step 3 - build_itos (not yet solved)
 # TODO: implement
