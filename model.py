@@ -229,8 +229,25 @@ def slice_column(arr: np.ndarray, j: int) -> np.ndarray:
     """
     return arr[:, j]
 
-# Step 16 - slice_subblock (not yet solved)
-# TODO: implement
+# Step 16 - slice_subblock
+import numpy as np
+
+def slice_subblock(arr: np.ndarray, r0: int, r1: int, c0: int, c1: int) -> np.ndarray:
+    """
+    Return the sub-block of a 2D NumPy array bounded by
+    rows [r0, r1) and columns [c0, c1).
+
+    Args:
+        arr (np.ndarray): Input 2D array.
+        r0 (int): Starting row (inclusive).
+        r1 (int): Ending row (exclusive).
+        c0 (int): Starting column (inclusive).
+        c1 (int): Ending column (exclusive).
+
+    Returns:
+        np.ndarray: The sliced sub-block.
+    """
+    return arr[r0:r1, c0:c1]
 
 # Step 17 - elementwise_add (not yet solved)
 # TODO: implement
