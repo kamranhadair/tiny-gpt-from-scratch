@@ -73,8 +73,19 @@ def encode_string(text: str, stoi: dict[str, int]) -> list[int]:
     """
     return [encode_char(ch, stoi) for ch in text]
 
-# Step 6 - decode_int (not yet solved)
-# TODO: implement
+# Step 6 - decode_int
+def decode_int(token_id: int, itos: dict[int, str]) -> str:
+    """
+    Decode a single token ID into its corresponding character.
+
+    Args:
+        token_id (int): Integer token ID.
+        itos (dict[int, str]): Index-to-character mapping.
+
+    Returns:
+        str: The decoded character.
+    """
+    return itos[token_id]
 
 # Step 7 - decode_ids (not yet solved)
 # TODO: implement
