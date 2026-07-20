@@ -180,8 +180,22 @@ def make_2d_random(rows: int, cols: int, seed: int) -> np.ndarray:
     rng = np.random.default_rng(seed)
     return rng.random((rows, cols))
 
-# Step 13 - index_element (not yet solved)
-# TODO: implement
+# Step 13 - index_element
+import numpy as np
+
+def index_element(arr: np.ndarray, i: int, j: int):
+    """
+    Return the element at row i, column j of a 2D NumPy array.
+
+    Args:
+        arr (np.ndarray): Input 2D array.
+        i (int): Row index.
+        j (int): Column index.
+
+    Returns:
+        Scalar value at arr[i, j].
+    """
+    return arr[i, j]
 
 # Step 14 - slice_row (not yet solved)
 # TODO: implement
