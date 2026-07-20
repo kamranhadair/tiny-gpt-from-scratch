@@ -343,8 +343,20 @@ def array_log(arr: np.ndarray) -> np.ndarray:
     """
     return np.log(arr)
 
-# Step 23 - sum_all (not yet solved)
-# TODO: implement
+# Step 23 - sum_all
+import numpy as np
+
+def sum_all(arr: np.ndarray):
+    """
+    Return the sum of all elements in a NumPy array.
+
+    Args:
+        arr (np.ndarray): Input array of any shape.
+
+    Returns:
+        Scalar: Sum of all elements.
+    """
+    return np.sum(arr)
 
 # Step 24 - sum_axis0 (not yet solved)
 # TODO: implement
