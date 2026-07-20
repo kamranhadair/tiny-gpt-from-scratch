@@ -101,8 +101,20 @@ def decode_ids(token_ids: list[int], itos: dict[int, str]) -> str:
     """
     return "".join(decode_int(token_id, itos) for token_id in token_ids)
 
-# Step 8 - make_1d_array (not yet solved)
-# TODO: implement
+# Step 8 - make_1d_array
+import numpy as np
+
+def make_1d_array(values: list) -> np.ndarray:
+    """
+    Convert a Python list into a 1D NumPy array.
+
+    Args:
+        values (list): Input list of numbers.
+
+    Returns:
+        np.ndarray: 1D NumPy array containing the input values.
+    """
+    return np.array(values)
 
 # Step 9 - get_array_shape (not yet solved)
 # TODO: implement
