@@ -249,8 +249,21 @@ def slice_subblock(arr: np.ndarray, r0: int, r1: int, c0: int, c1: int) -> np.nd
     """
     return arr[r0:r1, c0:c1]
 
-# Step 17 - elementwise_add (not yet solved)
-# TODO: implement
+# Step 17 - elementwise_add
+import numpy as np
+
+def elementwise_add(a: np.ndarray, b: np.ndarray) -> np.ndarray:
+    """
+    Return the element-wise sum of two NumPy arrays.
+
+    Args:
+        a (np.ndarray): First input array.
+        b (np.ndarray): Second input array.
+
+    Returns:
+        np.ndarray: Element-wise sum of a and b.
+    """
+    return a + b
 
 # Step 18 - elementwise_multiply (not yet solved)
 # TODO: implement
