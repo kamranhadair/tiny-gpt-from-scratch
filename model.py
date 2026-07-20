@@ -146,8 +146,21 @@ def get_array_dtype(arr: np.ndarray):
     """
     return arr.dtype
 
-# Step 11 - make_2d_zeros (not yet solved)
-# TODO: implement
+# Step 11 - make_2d_zeros
+import numpy as np
+
+def make_2d_zeros(rows: int, cols: int) -> np.ndarray:
+    """
+    Create a 2D NumPy array of zeros with shape (rows, cols).
+
+    Args:
+        rows (int): Number of rows.
+        cols (int): Number of columns.
+
+    Returns:
+        np.ndarray: A float64 array of zeros.
+    """
+    return np.zeros((rows, cols))
 
 # Step 12 - make_2d_random (not yet solved)
 # TODO: implement
