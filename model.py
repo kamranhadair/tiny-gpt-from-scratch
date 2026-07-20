@@ -197,8 +197,21 @@ def index_element(arr: np.ndarray, i: int, j: int):
     """
     return arr[i, j]
 
-# Step 14 - slice_row (not yet solved)
-# TODO: implement
+# Step 14 - slice_row
+import numpy as np
+
+def slice_row(arr: np.ndarray, i: int) -> np.ndarray:
+    """
+    Return row i of a 2D NumPy array as a 1D array.
+
+    Args:
+        arr (np.ndarray): Input 2D array.
+        i (int): Row index.
+
+    Returns:
+        np.ndarray: The i-th row as a 1D array.
+    """
+    return arr[i]
 
 # Step 15 - slice_column (not yet solved)
 # TODO: implement
