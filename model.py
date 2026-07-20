@@ -87,8 +87,19 @@ def decode_int(token_id: int, itos: dict[int, str]) -> str:
     """
     return itos[token_id]
 
-# Step 7 - decode_ids (not yet solved)
-# TODO: implement
+# Step 7 - decode_ids
+def decode_ids(token_ids: list[int], itos: dict[int, str]) -> str:
+    """
+    Decode a sequence of token IDs into a string.
+
+    Args:
+        token_ids (list[int]): List of integer token IDs.
+        itos (dict[int, str]): Index-to-character mapping.
+
+    Returns:
+        str: The decoded string.
+    """
+    return "".join(decode_int(token_id, itos) for token_id in token_ids)
 
 # Step 8 - make_1d_array (not yet solved)
 # TODO: implement
