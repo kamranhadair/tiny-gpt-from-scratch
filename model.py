@@ -404,8 +404,21 @@ def max_along_axis(arr: np.ndarray, axis: int) -> np.ndarray:
     """
     return np.max(arr, axis=axis)
 
-# Step 27 - matmul (not yet solved)
-# TODO: implement
+# Step 27 - matmul
+import numpy as np
+
+def matmul(a: np.ndarray, b: np.ndarray) -> np.ndarray:
+    """
+    Compute the matrix product of two 2D NumPy arrays.
+
+    Args:
+        a (np.ndarray): Left matrix of shape (M, K).
+        b (np.ndarray): Right matrix of shape (K, N).
+
+    Returns:
+        np.ndarray: Matrix product of shape (M, N).
+    """
+    return a @ b
 
 # Step 28 - transpose_matrix (not yet solved)
 # TODO: implement
