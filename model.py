@@ -281,8 +281,21 @@ def elementwise_multiply(a: np.ndarray, b: np.ndarray) -> np.ndarray:
     """
     return a * b
 
-# Step 19 - scalar_broadcast_add (not yet solved)
-# TODO: implement
+# Step 19 - scalar_broadcast_add
+import numpy as np
+
+def scalar_broadcast_add(arr: np.ndarray, scalar) -> np.ndarray:
+    """
+    Return a new array with a scalar added to every element.
+
+    Args:
+        arr (np.ndarray): Input array.
+        scalar: A Python scalar (e.g., int or float).
+
+    Returns:
+        np.ndarray: New array with the scalar added element-wise.
+    """
+    return arr + scalar
 
 # Step 20 - vector_matrix_broadcast_add (not yet solved)
 # TODO: implement
