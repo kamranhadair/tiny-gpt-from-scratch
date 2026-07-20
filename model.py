@@ -373,8 +373,20 @@ def sum_axis0(arr: np.ndarray) -> np.ndarray:
     """
     return np.sum(arr, axis=0)
 
-# Step 25 - sum_axis1 (not yet solved)
-# TODO: implement
+# Step 25 - sum_axis1
+import numpy as np
+
+def sum_axis1(arr: np.ndarray) -> np.ndarray:
+    """
+    Sum a 2D NumPy array along axis 1 (columns), returning row sums.
+
+    Args:
+        arr (np.ndarray): Input array of shape (R, C).
+
+    Returns:
+        np.ndarray: 1D array of shape (R,) containing row sums.
+    """
+    return np.sum(arr, axis=1)
 
 # Step 26 - max_along_axis (not yet solved)
 # TODO: implement
