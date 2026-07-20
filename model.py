@@ -388,8 +388,21 @@ def sum_axis1(arr: np.ndarray) -> np.ndarray:
     """
     return np.sum(arr, axis=1)
 
-# Step 26 - max_along_axis (not yet solved)
-# TODO: implement
+# Step 26 - max_along_axis
+import numpy as np
+
+def max_along_axis(arr: np.ndarray, axis: int) -> np.ndarray:
+    """
+    Return maximum values along a given axis.
+
+    Args:
+        arr (np.ndarray): Input NumPy array.
+        axis (int): Axis along which to compute the maximum.
+
+    Returns:
+        np.ndarray: Array with the specified axis collapsed.
+    """
+    return np.max(arr, axis=axis)
 
 # Step 27 - matmul (not yet solved)
 # TODO: implement
