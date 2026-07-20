@@ -213,8 +213,21 @@ def slice_row(arr: np.ndarray, i: int) -> np.ndarray:
     """
     return arr[i]
 
-# Step 15 - slice_column (not yet solved)
-# TODO: implement
+# Step 15 - slice_column
+import numpy as np
+
+def slice_column(arr: np.ndarray, j: int) -> np.ndarray:
+    """
+    Return column j of a 2D NumPy array as a 1D array.
+
+    Args:
+        arr (np.ndarray): Input 2D array.
+        j (int): Column index.
+
+    Returns:
+        np.ndarray: The j-th column as a 1D array.
+    """
+    return arr[:, j]
 
 # Step 16 - slice_subblock (not yet solved)
 # TODO: implement
