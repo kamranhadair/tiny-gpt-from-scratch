@@ -265,8 +265,21 @@ def elementwise_add(a: np.ndarray, b: np.ndarray) -> np.ndarray:
     """
     return a + b
 
-# Step 18 - elementwise_multiply (not yet solved)
-# TODO: implement
+# Step 18 - elementwise_multiply
+import numpy as np
+
+def elementwise_multiply(a: np.ndarray, b: np.ndarray) -> np.ndarray:
+    """
+    Return the element-wise (Hadamard) product of two NumPy arrays.
+
+    Args:
+        a (np.ndarray): First input array.
+        b (np.ndarray): Second input array.
+
+    Returns:
+        np.ndarray: Element-wise product of a and b.
+    """
+    return a * b
 
 # Step 19 - scalar_broadcast_add (not yet solved)
 # TODO: implement
