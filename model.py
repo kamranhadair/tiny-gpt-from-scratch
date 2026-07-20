@@ -313,8 +313,20 @@ def vector_matrix_broadcast_add(matrix: np.ndarray, vector: np.ndarray) -> np.nd
     """
     return matrix + vector
 
-# Step 21 - array_exp (not yet solved)
-# TODO: implement
+# Step 21 - array_exp
+import numpy as np
+
+def array_exp(arr: np.ndarray) -> np.ndarray:
+    """
+    Apply the exponential function element-wise to a NumPy array.
+
+    Args:
+        arr (np.ndarray): Input array.
+
+    Returns:
+        np.ndarray: Array with exp applied to each element.
+    """
+    return np.exp(arr)
 
 # Step 22 - array_log (not yet solved)
 # TODO: implement
