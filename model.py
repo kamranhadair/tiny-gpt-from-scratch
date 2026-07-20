@@ -162,8 +162,23 @@ def make_2d_zeros(rows: int, cols: int) -> np.ndarray:
     """
     return np.zeros((rows, cols))
 
-# Step 12 - make_2d_random (not yet solved)
-# TODO: implement
+# Step 12 - make_2d_random
+import numpy as np
+
+def make_2d_random(rows: int, cols: int, seed: int) -> np.ndarray:
+    """
+    Create a reproducible 2D array of random floats in [0, 1).
+
+    Args:
+        rows (int): Number of rows.
+        cols (int): Number of columns.
+        seed (int): Seed for the random number generator.
+
+    Returns:
+        np.ndarray: Array of shape (rows, cols) with random floats.
+    """
+    rng = np.random.default_rng(seed)
+    return rng.random((rows, cols))
 
 # Step 13 - index_element (not yet solved)
 # TODO: implement
