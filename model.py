@@ -297,8 +297,21 @@ def scalar_broadcast_add(arr: np.ndarray, scalar) -> np.ndarray:
     """
     return arr + scalar
 
-# Step 20 - vector_matrix_broadcast_add (not yet solved)
-# TODO: implement
+# Step 20 - vector_matrix_broadcast_add
+import numpy as np
+
+def vector_matrix_broadcast_add(matrix: np.ndarray, vector: np.ndarray) -> np.ndarray:
+    """
+    Add a 1D vector to every row of a 2D matrix using broadcasting.
+
+    Args:
+        matrix (np.ndarray): 2D array of shape (R, C).
+        vector (np.ndarray): 1D array of shape (C,).
+
+    Returns:
+        np.ndarray: A new array of shape (R, C).
+    """
+    return matrix + vector
 
 # Step 21 - array_exp (not yet solved)
 # TODO: implement
