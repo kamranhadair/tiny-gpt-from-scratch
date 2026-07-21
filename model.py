@@ -900,8 +900,27 @@ def decode_generated_sequence(token_ids, itos: dict[int, str]) -> str:
     chars = [decode_int(token_id, itos) for token_id in token_ids]
     return "".join(chars)
 
-# Step 54 - log_prob_of_pair (not yet solved)
-# TODO: implement
+# Step 54 - log_prob_of_pair
+import numpy as np
+
+def log_prob_of_pair(
+    p_matrix: np.ndarray,
+    current_id: int,
+    next_id: int
+) -> float:
+    """
+    Return the natural log probability of a bigram transition.
+
+    Args:
+        p_matrix (np.ndarray): Row-stochastic probability matrix.
+        current_id (int): Current token id.
+        next_id (int): Next token id.
+
+    Returns:
+        float: Natural log of P[current_id, next_id].
+    """
+    prob = index_element(p_matrix, current_id, next_id)
+    return float(array_log(np.array([prob]))[0])
 
 # Step 55 - sum_negative_log_probs (not yet solved)
 # TODO: implement
