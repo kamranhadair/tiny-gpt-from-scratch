@@ -498,8 +498,24 @@ def stable_softmax_1d(logits: np.ndarray) -> np.ndarray:
     exp_shifted = array_exp(shifted)
     return exp_shifted / sum_all(exp_shifted)
 
-# Step 33 - stable_softmax_2d_rowwise (not yet solved)
-# TODO: implement
+# Step 33 - stable_softmax_2d_rowwise
+import numpy as np
+
+def stable_softmax_2d_rowwise(logits: np.ndarray) -> np.ndarray:
+    """
+    Apply a numerically stable softmax to each row of a 2D logits array.
+
+    Args:
+        logits (np.ndarray): Array of shape (N, C).
+
+    Returns:
+        np.ndarray: Softmax probabilities of shape (N, C).
+    """
+    row_max = max_along_axis(logits, axis=1).reshape(-1, 1)
+    shifted = logits - row_max
+    exp_shifted = array_exp(shifted)
+    row_sums = sum_keepdims(exp_shifted, axis=1)
+    return exp_shifted / row_sums
 
 # Step 34 - read_text_file (not yet solved)
 # TODO: implement
