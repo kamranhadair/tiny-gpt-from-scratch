@@ -830,8 +830,27 @@ def normalize_counts_to_probs(n_matrix: np.ndarray) -> np.ndarray:
     row_totals = row_sums_of_counts(n_matrix)
     return n_matrix / row_totals
 
-# Step 51 - sample_next_token (not yet solved)
-# TODO: implement
+# Step 51 - sample_next_token
+import numpy as np
+
+def sample_next_token(
+    p_matrix: np.ndarray,
+    current_id: int,
+    rng: np.random.Generator
+) -> int:
+    """
+    Sample the next token id from a categorical distribution.
+
+    Args:
+        p_matrix (np.ndarray): Row-stochastic probability matrix.
+        current_id (int): Current token id.
+        rng (np.random.Generator): Random generator.
+
+    Returns:
+        int: Sampled next token id.
+    """
+    probs = p_matrix[current_id]
+    return int(rng.choice(len(probs), p=probs))
 
 # Step 52 - generate_sequence (not yet solved)
 # TODO: implement
