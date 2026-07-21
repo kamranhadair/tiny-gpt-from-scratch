@@ -885,8 +885,20 @@ def generate_sequence(
 
     return sequence
 
-# Step 53 - decode_generated_sequence (not yet solved)
-# TODO: implement
+# Step 53 - decode_generated_sequence
+def decode_generated_sequence(token_ids, itos: dict[int, str]) -> str:
+    """
+    Decode generated token ids back into a string.
+
+    Args:
+        token_ids: Python list or NumPy array of integer token ids.
+        itos (dict[int, str]): Integer-to-character mapping.
+
+    Returns:
+        str: Decoded text string.
+    """
+    chars = [decode_int(token_id, itos) for token_id in token_ids]
+    return "".join(chars)
 
 # Step 54 - log_prob_of_pair (not yet solved)
 # TODO: implement
