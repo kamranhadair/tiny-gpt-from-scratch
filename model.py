@@ -950,8 +950,25 @@ def sum_negative_log_probs(
 
     return float(total)
 
-# Step 56 - average_nll (not yet solved)
-# TODO: implement
+# Step 56 - average_nll
+import numpy as np
+
+def average_nll(
+    p_matrix: np.ndarray,
+    data: np.ndarray
+) -> float:
+    """
+    Compute the average negative log likelihood per bigram.
+
+    Args:
+        p_matrix (np.ndarray): Row-stochastic bigram probability matrix.
+        data (np.ndarray): 1D array of token ids.
+
+    Returns:
+        float: Mean negative log likelihood.
+    """
+    total_nll = sum_negative_log_probs(p_matrix, data)
+    return float(total_nll / (len(data) - 1))
 
 # Step 57 - initialize_w_random (not yet solved)
 # TODO: implement
