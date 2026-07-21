@@ -922,8 +922,33 @@ def log_prob_of_pair(
     prob = index_element(p_matrix, current_id, next_id)
     return float(array_log(np.array([prob]))[0])
 
-# Step 55 - sum_negative_log_probs (not yet solved)
-# TODO: implement
+# Step 55 - sum_negative_log_probs
+import numpy as np
+
+def sum_negative_log_probs(
+    p_matrix: np.ndarray,
+    data: np.ndarray
+) -> float:
+    """
+    Sum negative log probabilities of consecutive token transitions.
+
+    Args:
+        p_matrix (np.ndarray): Bigram probability matrix.
+        data (np.ndarray): 1D token id sequence.
+
+    Returns:
+        float: Total negative log probability.
+    """
+    total = 0.0
+
+    for t in range(len(data) - 1):
+        total -= log_prob_of_pair(
+            p_matrix,
+            data[t],
+            data[t + 1]
+        )
+
+    return float(total)
 
 # Step 56 - average_nll (not yet solved)
 # TODO: implement
