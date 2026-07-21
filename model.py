@@ -618,8 +618,23 @@ def slice_x_at_offset(data: np.ndarray, i: int, block_size: int) -> np.ndarray:
     """
     return data[i : i + block_size]
 
-# Step 40 - slice_y_at_offset (not yet solved)
-# TODO: implement
+# Step 40 - slice_y_at_offset
+import numpy as np
+
+def slice_y_at_offset(data: np.ndarray, i: int, block_size: int) -> np.ndarray:
+    """
+    Extract the target window of length block_size starting one position
+    after index i.
+
+    Args:
+        data (np.ndarray): 1D array of token IDs.
+        i (int): Starting index of the input window.
+        block_size (int): Length of the window.
+
+    Returns:
+        np.ndarray: Target window of shape (block_size,).
+    """
+    return data[i + 1 : i + block_size + 1]
 
 # Step 41 - sample_random_batch_offsets (not yet solved)
 # TODO: implement
