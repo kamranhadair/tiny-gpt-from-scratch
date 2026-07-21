@@ -540,8 +540,21 @@ def read_text_file(text: str) -> str:
 
     return text
 
-# Step 35 - encode_corpus_to_int_array (not yet solved)
-# TODO: implement
+# Step 35 - encode_corpus_to_int_array
+import numpy as np
+
+def encode_corpus_to_int_array(text: str, stoi: dict[str, int]) -> np.ndarray:
+    """
+    Encode a corpus string into a 1D NumPy array of int64 token IDs.
+
+    Args:
+        text (str): Input corpus.
+        stoi (dict[str, int]): Character-to-index mapping.
+
+    Returns:
+        np.ndarray: 1D array of token IDs with dtype int64.
+    """
+    return np.array(encode_string(text, stoi), dtype=np.int64)
 
 # Step 36 - pick_split_point (not yet solved)
 # TODO: implement
