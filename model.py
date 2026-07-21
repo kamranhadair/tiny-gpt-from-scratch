@@ -588,8 +588,18 @@ def slice_train_and_val(data: np.ndarray, split_idx: int) -> tuple[np.ndarray, n
     val = data[split_idx:]
     return train, val
 
-# Step 38 - pick_block_size (not yet solved)
-# TODO: implement
+# Step 38 - pick_block_size
+def pick_block_size(default_size: int) -> int:
+    """
+    Return a valid block size (context length).
+
+    Args:
+        default_size (int): Desired block size.
+
+    Returns:
+        int: Block size, clamped to a minimum of 1.
+    """
+    return max(1, default_size)
 
 # Step 39 - slice_x_at_offset (not yet solved)
 # TODO: implement
