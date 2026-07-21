@@ -420,8 +420,20 @@ def matmul(a: np.ndarray, b: np.ndarray) -> np.ndarray:
     """
     return a @ b
 
-# Step 28 - transpose_matrix (not yet solved)
-# TODO: implement
+# Step 28 - transpose_matrix
+import numpy as np
+
+def transpose_matrix(arr: np.ndarray) -> np.ndarray:
+    """
+    Return the transpose of a 2D NumPy array.
+
+    Args:
+        arr (np.ndarray): Input array of shape (R, C).
+
+    Returns:
+        np.ndarray: Transposed array of shape (C, R).
+    """
+    return arr.T
 
 # Step 29 - sum_keepdims (not yet solved)
 # TODO: implement
