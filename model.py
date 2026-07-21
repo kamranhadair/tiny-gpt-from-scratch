@@ -601,8 +601,22 @@ def pick_block_size(default_size: int) -> int:
     """
     return max(1, default_size)
 
-# Step 39 - slice_x_at_offset (not yet solved)
-# TODO: implement
+# Step 39 - slice_x_at_offset
+import numpy as np
+
+def slice_x_at_offset(data: np.ndarray, i: int, block_size: int) -> np.ndarray:
+    """
+    Extract an input window of length block_size starting at index i.
+
+    Args:
+        data (np.ndarray): 1D array of token IDs.
+        i (int): Starting index.
+        block_size (int): Length of the window.
+
+    Returns:
+        np.ndarray: Input window of shape (block_size,).
+    """
+    return data[i : i + block_size]
 
 # Step 40 - slice_y_at_offset (not yet solved)
 # TODO: implement
