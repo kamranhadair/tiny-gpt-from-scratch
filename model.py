@@ -570,8 +570,23 @@ def pick_split_point(n: int, train_frac: float) -> int:
     """
     return int(n * train_frac)
 
-# Step 37 - slice_train_and_val (not yet solved)
-# TODO: implement
+# Step 37 - slice_train_and_val
+import numpy as np
+
+def slice_train_and_val(data: np.ndarray, split_idx: int) -> tuple[np.ndarray, np.ndarray]:
+    """
+    Split an encoded corpus into training and validation arrays.
+
+    Args:
+        data (np.ndarray): 1D array of token IDs.
+        split_idx (int): Index at which to split.
+
+    Returns:
+        tuple[np.ndarray, np.ndarray]: (train, val)
+    """
+    train = data[:split_idx]
+    val = data[split_idx:]
+    return train, val
 
 # Step 38 - pick_block_size (not yet solved)
 # TODO: implement
