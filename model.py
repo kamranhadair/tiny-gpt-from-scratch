@@ -435,8 +435,22 @@ def transpose_matrix(arr: np.ndarray) -> np.ndarray:
     """
     return arr.T
 
-# Step 29 - sum_keepdims (not yet solved)
-# TODO: implement
+# Step 29 - sum_keepdims
+import numpy as np
+
+def sum_keepdims(arr: np.ndarray, axis: int) -> np.ndarray:
+    """
+    Sum a NumPy array along the given axis while keeping
+    the reduced dimension as size 1.
+
+    Args:
+        arr (np.ndarray): Input array.
+        axis (int): Axis along which to sum.
+
+    Returns:
+        np.ndarray: Summed array with the reduced axis retained.
+    """
+    return np.sum(arr, axis=axis, keepdims=True)
 
 # Step 30 - naive_softmax_1d (not yet solved)
 # TODO: implement
