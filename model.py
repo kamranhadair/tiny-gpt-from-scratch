@@ -452,8 +452,21 @@ def sum_keepdims(arr: np.ndarray, axis: int) -> np.ndarray:
     """
     return np.sum(arr, axis=axis, keepdims=True)
 
-# Step 30 - naive_softmax_1d (not yet solved)
-# TODO: implement
+# Step 30 - naive_softmax_1d
+import numpy as np
+
+def naive_softmax_1d(logits: np.ndarray) -> np.ndarray:
+    """
+    Compute the naive (unstable) softmax of a 1D logits vector.
+
+    Args:
+        logits (np.ndarray): 1D array of logits.
+
+    Returns:
+        np.ndarray: Softmax probabilities summing to 1.
+    """
+    exp_logits = array_exp(logits)
+    return exp_logits / sum_all(exp_logits)
 
 # Step 31 - softmax_overflow_demo (not yet solved)
 # TODO: implement
