@@ -852,8 +852,38 @@ def sample_next_token(
     probs = p_matrix[current_id]
     return int(rng.choice(len(probs), p=probs))
 
-# Step 52 - generate_sequence (not yet solved)
-# TODO: implement
+# Step 52 - generate_sequence
+import numpy as np
+
+def generate_sequence(
+    p_matrix: np.ndarray,
+    start_id: int,
+    length: int,
+    rng: np.random.Generator
+) -> np.ndarray:
+    """
+    Generate a token sequence autoregressively from a bigram probability matrix.
+
+    Args:
+        p_matrix (np.ndarray): Row-stochastic bigram probability matrix.
+        start_id (int): Initial token id.
+        length (int): Length of generated sequence.
+        rng (np.random.Generator): Random generator.
+
+    Returns:
+        np.ndarray: Generated token ids of shape (length,).
+    """
+    sequence = np.empty(length, dtype=np.int64)
+    sequence[0] = start_id
+
+    for i in range(1, length):
+        sequence[i] = sample_next_token(
+            p_matrix,
+            sequence[i - 1],
+            rng
+        )
+
+    return sequence
 
 # Step 53 - decode_generated_sequence (not yet solved)
 # TODO: implement
