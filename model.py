@@ -636,8 +636,28 @@ def slice_y_at_offset(data: np.ndarray, i: int, block_size: int) -> np.ndarray:
     """
     return data[i + 1 : i + block_size + 1]
 
-# Step 41 - sample_random_batch_offsets (not yet solved)
-# TODO: implement
+# Step 41 - sample_random_batch_offsets
+import numpy as np
+
+def sample_random_batch_offsets(
+    data_length: int,
+    block_size: int,
+    batch_size: int,
+    rng: np.random.Generator,
+) -> np.ndarray:
+    """
+    Sample random valid starting offsets for training windows.
+
+    Args:
+        data_length (int): Length of the encoded corpus.
+        block_size (int): Context length.
+        batch_size (int): Number of offsets to sample.
+        rng (np.random.Generator): Seeded NumPy random generator.
+
+    Returns:
+        np.ndarray: 1D array of random starting offsets.
+    """
+    return rng.integers(0, data_length - block_size, size=batch_size)
 
 # Step 42 - stack_x_batch (not yet solved)
 # TODO: implement
