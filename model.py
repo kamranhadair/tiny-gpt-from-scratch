@@ -682,8 +682,28 @@ def stack_x_batch(
         [slice_x_at_offset(data, offset, block_size) for offset in offsets]
     )
 
-# Step 43 - stack_y_batch (not yet solved)
-# TODO: implement
+# Step 43 - stack_y_batch
+import numpy as np
+
+def stack_y_batch(
+    data: np.ndarray,
+    offsets,
+    block_size: int
+) -> np.ndarray:
+    """
+    Stack target windows into a 2D batch matrix.
+
+    Args:
+        data (np.ndarray): 1D array of token IDs.
+        offsets: Iterable of starting indices.
+        block_size (int): Length of each target window.
+
+    Returns:
+        np.ndarray: 2D array of shape (B, block_size).
+    """
+    return np.stack(
+        [slice_y_at_offset(data, offset, block_size) for offset in offsets]
+    )
 
 # Step 44 - get_batch (not yet solved)
 # TODO: implement
