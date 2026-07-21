@@ -556,8 +556,19 @@ def encode_corpus_to_int_array(text: str, stoi: dict[str, int]) -> np.ndarray:
     """
     return np.array(encode_string(text, stoi), dtype=np.int64)
 
-# Step 36 - pick_split_point (not yet solved)
-# TODO: implement
+# Step 36 - pick_split_point
+def pick_split_point(n: int, train_frac: float) -> int:
+    """
+    Compute the train/validation split index.
+
+    Args:
+        n (int): Total number of tokens.
+        train_frac (float): Fraction of data to use for training.
+
+    Returns:
+        int: Split index.
+    """
+    return int(n * train_frac)
 
 # Step 37 - slice_train_and_val (not yet solved)
 # TODO: implement
