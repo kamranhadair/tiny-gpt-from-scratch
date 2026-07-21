@@ -752,8 +752,23 @@ def allocate_count_matrix(vocab_size: int) -> np.ndarray:
     """
     return np.zeros((vocab_size, vocab_size), dtype=np.int64)
 
-# Step 46 - loop_fill_counts (not yet solved)
-# TODO: implement
+# Step 46 - loop_fill_counts
+import numpy as np
+
+def loop_fill_counts(n_matrix: np.ndarray, data: np.ndarray) -> np.ndarray:
+    """
+    Fill a bigram count matrix by iterating over consecutive token pairs.
+
+    Args:
+        n_matrix (np.ndarray): Bigram count matrix of shape (V, V).
+        data (np.ndarray): 1D array of token IDs.
+
+    Returns:
+        np.ndarray: The updated count matrix.
+    """
+    for t in range(len(data) - 1):
+        n_matrix[data[t], data[t + 1]] += 1
+    return n_matrix
 
 # Step 47 - vectorize_counts_add_at (not yet solved)
 # TODO: implement
