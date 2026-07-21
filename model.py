@@ -517,8 +517,28 @@ def stable_softmax_2d_rowwise(logits: np.ndarray) -> np.ndarray:
     row_sums = sum_keepdims(exp_shifted, axis=1)
     return exp_shifted / row_sums
 
-# Step 34 - read_text_file (not yet solved)
-# TODO: implement
+# Step 34 - read_text_file
+def read_text_file(text: str) -> str:
+    """
+    Validate and return a text corpus.
+
+    Args:
+        text (str): Raw text blob.
+
+    Returns:
+        str: The validated text.
+
+    Raises:
+        TypeError: If text is not a string.
+        ValueError: If text is an empty string.
+    """
+    if not isinstance(text, str):
+        raise TypeError("Input must be a string.")
+
+    if text == "":
+        raise ValueError("Input string cannot be empty.")
+
+    return text
 
 # Step 35 - encode_corpus_to_int_array (not yet solved)
 # TODO: implement
