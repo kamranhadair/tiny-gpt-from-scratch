@@ -793,8 +793,11 @@ def vectorize_counts_add_at(vocab_size: int, data: np.ndarray) -> np.ndarray:
 
     return N
 
-# Step 48 - add_one_smoothing (not yet solved)
-# TODO: implement
+# Step 48 - add_one_smoothing
+import numpy as np
+
+def add_one_smoothing(N: np.ndarray) -> np.ndarray:
+    return N + 1
 
 # Step 49 - row_sums_of_counts (not yet solved)
 # TODO: implement
