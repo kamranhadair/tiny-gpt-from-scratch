@@ -799,8 +799,20 @@ import numpy as np
 def add_one_smoothing(N: np.ndarray) -> np.ndarray:
     return N + 1
 
-# Step 49 - row_sums_of_counts (not yet solved)
-# TODO: implement
+# Step 49 - row_sums_of_counts
+import numpy as np
+
+def row_sums_of_counts(N: np.ndarray) -> np.ndarray:
+    """
+    Compute row sums of a bigram count matrix while keeping dimensions.
+
+    Args:
+        N (np.ndarray): Count matrix of shape (V, V).
+
+    Returns:
+        np.ndarray: Column vector of shape (V, 1) containing row sums.
+    """
+    return sum_keepdims(N, axis=1)
 
 # Step 50 - normalize_counts_to_probs (not yet solved)
 # TODO: implement
