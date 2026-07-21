@@ -737,8 +737,20 @@ def get_batch(
 
     return X, Y
 
-# Step 45 - allocate_count_matrix (not yet solved)
-# TODO: implement
+# Step 45 - allocate_count_matrix
+import numpy as np
+
+def allocate_count_matrix(vocab_size: int) -> np.ndarray:
+    """
+    Allocate a (V, V) integer matrix of zeros for bigram counts.
+
+    Args:
+        vocab_size (int): Size of the vocabulary.
+
+    Returns:
+        np.ndarray: Integer matrix of shape (vocab_size, vocab_size).
+    """
+    return np.zeros((vocab_size, vocab_size), dtype=np.int64)
 
 # Step 46 - loop_fill_counts (not yet solved)
 # TODO: implement
