@@ -814,8 +814,21 @@ def row_sums_of_counts(N: np.ndarray) -> np.ndarray:
     """
     return sum_keepdims(N, axis=1)
 
-# Step 50 - normalize_counts_to_probs (not yet solved)
-# TODO: implement
+# Step 50 - normalize_counts_to_probs
+import numpy as np
+
+def normalize_counts_to_probs(n_matrix: np.ndarray) -> np.ndarray:
+    """
+    Convert a count matrix into a row-stochastic probability matrix.
+
+    Args:
+        n_matrix (np.ndarray): Bigram count matrix of shape (V, V).
+
+    Returns:
+        np.ndarray: Probability matrix of shape (V, V), with each row summing to 1.
+    """
+    row_totals = row_sums_of_counts(n_matrix)
+    return n_matrix / row_totals
 
 # Step 51 - sample_next_token (not yet solved)
 # TODO: implement
