@@ -770,8 +770,28 @@ def loop_fill_counts(n_matrix: np.ndarray, data: np.ndarray) -> np.ndarray:
         n_matrix[data[t], data[t + 1]] += 1
     return n_matrix
 
-# Step 47 - vectorize_counts_add_at (not yet solved)
-# TODO: implement
+# Step 47 - vectorize_counts_add_at
+import numpy as np
+
+def vectorize_counts_add_at(vocab_size: int, data: np.ndarray) -> np.ndarray:
+    """
+    Build a bigram count matrix using vectorized accumulation.
+
+    Args:
+        vocab_size (int): Size of the vocabulary.
+        data (np.ndarray): 1D array of token IDs.
+
+    Returns:
+        np.ndarray: (V, V) int64 bigram count matrix.
+    """
+    N = allocate_count_matrix(vocab_size)
+
+    current = data[:-1]
+    next_tokens = data[1:]
+
+    np.add.at(N, (current, next_tokens), 1)
+
+    return N
 
 # Step 48 - add_one_smoothing (not yet solved)
 # TODO: implement
