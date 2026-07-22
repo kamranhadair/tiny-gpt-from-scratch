@@ -1025,8 +1025,24 @@ def one_hot_encode_batch(token_ids: np.ndarray, vocab_size: int) -> np.ndarray:
     one_hot[np.arange(len(token_ids)), token_ids] = 1.0
     return one_hot
 
-# Step 60 - forward_logits_onehot (not yet solved)
-# TODO: implement
+# Step 60 - forward_logits_onehot
+import numpy as np
+
+def forward_logits_onehot(
+    onehot: np.ndarray,
+    w_matrix: np.ndarray
+) -> np.ndarray:
+    """
+    Compute neural bigram logits from one-hot encoded inputs.
+
+    Args:
+        onehot (np.ndarray): One-hot input matrix of shape (N, V).
+        w_matrix (np.ndarray): Weight matrix of shape (V, V).
+
+    Returns:
+        np.ndarray: Logits matrix of shape (N, V).
+    """
+    return matmul(onehot, w_matrix)
 
 # Step 61 - observe_lookup_equivalence (not yet solved)
 # TODO: implement
