@@ -991,8 +991,21 @@ def initialize_w_random(
     """
     return rng.standard_normal((vocab_size, vocab_size))
 
-# Step 58 - scale_w_small (not yet solved)
-# TODO: implement
+# Step 58 - scale_w_small
+import numpy as np
+
+def scale_w_small(w_matrix: np.ndarray, scale: float) -> np.ndarray:
+    """
+    Scale a weight matrix by a constant factor.
+
+    Args:
+        w_matrix (np.ndarray): Input weight matrix.
+        scale (float): Scaling factor.
+
+    Returns:
+        np.ndarray: A new scaled weight matrix.
+    """
+    return w_matrix * scale
 
 # Step 59 - one_hot_encode_batch (not yet solved)
 # TODO: implement
