@@ -970,8 +970,26 @@ def average_nll(
     total_nll = sum_negative_log_probs(p_matrix, data)
     return float(total_nll / (len(data) - 1))
 
-# Step 57 - initialize_w_random (not yet solved)
-# TODO: implement
+# Step 57 - initialize_w_random
+import numpy as np
+
+def initialize_w_random(
+    vocab_size: int,
+    rng: np.random.Generator
+) -> np.ndarray:
+    """
+    Initialize the neural bigram weight matrix with samples from
+    a standard normal distribution.
+
+    Args:
+        vocab_size (int): Size of the vocabulary.
+        rng (np.random.Generator): Random number generator.
+
+    Returns:
+        np.ndarray: Weight matrix of shape (vocab_size, vocab_size)
+                    with dtype float64.
+    """
+    return rng.standard_normal((vocab_size, vocab_size))
 
 # Step 58 - scale_w_small (not yet solved)
 # TODO: implement
