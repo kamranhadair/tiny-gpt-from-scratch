@@ -1095,8 +1095,20 @@ def forward_logits_lookup(
     """
     return w[ids]
 
-# Step 63 - logits_to_probs_rowwise (not yet solved)
-# TODO: implement
+# Step 63 - logits_to_probs_rowwise
+import numpy as np
+
+def logits_to_probs_rowwise(logits: np.ndarray) -> np.ndarray:
+    """
+    Convert a batch of logits into row-wise probability distributions.
+
+    Args:
+        logits (np.ndarray): Logits matrix of shape (B, V).
+
+    Returns:
+        np.ndarray: Probability matrix of shape (B, V), where each row sums to 1.
+    """
+    return stable_softmax_2d_rowwise(logits)
 
 # Step 64 - gather_correct_token_probs (not yet solved)
 # TODO: implement
