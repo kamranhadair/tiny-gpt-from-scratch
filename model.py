@@ -1076,8 +1076,24 @@ def observe_lookup_equivalence(
         "index_result": index_result,
     }
 
-# Step 62 - forward_logits_lookup (not yet solved)
-# TODO: implement
+# Step 62 - forward_logits_lookup
+import numpy as np
+
+def forward_logits_lookup(
+    w: np.ndarray,
+    ids: np.ndarray
+) -> np.ndarray:
+    """
+    Compute logits by directly looking up rows of the weight matrix.
+
+    Args:
+        w (np.ndarray): Weight matrix of shape (V, V).
+        ids (np.ndarray): 1D array of token IDs of shape (B,).
+
+    Returns:
+        np.ndarray: Logits matrix of shape (B, V).
+    """
+    return w[ids]
 
 # Step 63 - logits_to_probs_rowwise (not yet solved)
 # TODO: implement
