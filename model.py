@@ -1170,8 +1170,28 @@ def derive_dlogits_on_paper() -> str:
         "Final formula: dL/dlogits = (probs - onehot(targets)) / B"
     )
 
-# Step 67 - compute_dlogits (not yet solved)
-# TODO: implement
+# Step 67 - compute_dlogits
+import numpy as np
+
+def compute_dlogits(probs: np.ndarray, targets: np.ndarray) -> np.ndarray:
+    """
+    Compute the gradient of the mean cross-entropy loss with respect
+    to the logits.
+
+    Args:
+        probs (np.ndarray): Softmax probabilities of shape (B, V).
+        targets (np.ndarray): Integer target labels of shape (B,).
+
+    Returns:
+        np.ndarray: Gradient dL/dlogits of shape (B, V).
+    """
+    batch_size = probs.shape[0]
+
+    dlogits = probs.copy()
+    dlogits[np.arange(batch_size), targets] -= 1.0
+    dlogits /= batch_size
+
+    return dlogits
 
 # Step 68 - derive_dw_on_paper (not yet solved)
 # TODO: implement
