@@ -1044,8 +1044,37 @@ def forward_logits_onehot(
     """
     return matmul(onehot, w_matrix)
 
-# Step 61 - observe_lookup_equivalence (not yet solved)
-# TODO: implement
+# Step 61 - observe_lookup_equivalence
+import numpy as np
+
+def observe_lookup_equivalence(
+    w: np.ndarray,
+    ids: np.ndarray
+) -> dict:
+    """
+    Verify that one-hot matmul and direct indexing produce the same logits.
+
+    Args:
+        w (np.ndarray): Weight matrix of shape (V, V).
+        ids (np.ndarray): 1D array of token IDs of length B.
+
+    Returns:
+        dict: {
+            'onehot_result': (B, V) ndarray,
+            'index_result': (B, V) ndarray
+        }
+    """
+    vocab_size = w.shape[0]
+
+    onehot = one_hot_encode_batch(ids, vocab_size)
+    onehot_result = forward_logits_onehot(onehot, w)
+
+    index_result = w[ids]
+
+    return {
+        "onehot_result": onehot_result,
+        "index_result": index_result,
+    }
 
 # Step 62 - forward_logits_lookup (not yet solved)
 # TODO: implement
