@@ -1307,8 +1307,42 @@ def train_neural_bigram_loop(
         "loss_history": loss_history,
     }
 
-# Step 73 - sample_from_neural_bigram (not yet solved)
-# TODO: implement
+# Step 73 - sample_from_neural_bigram
+import numpy as np
+
+def sample_from_neural_bigram(
+    W: np.ndarray,
+    start_id: int,
+    num_tokens: int,
+    itos: dict
+) -> str:
+    """
+    Autoregressively sample from a neural bigram model.
+
+    Args:
+        W: Weight matrix of shape (V, V).
+        start_id: Initial token id.
+        num_tokens: Number of new tokens to generate.
+        itos: Integer-to-string mapping.
+
+    Returns:
+        Decoded string including the starting token.
+    """
+    rng = np.random.default_rng()
+
+    ids = [start_id]
+    current_id = start_id
+
+    for _ in range(num_tokens):
+        logits = forward_logits_lookup(W, np.array([current_id]))
+        probs = logits_to_probs_rowwise(logits)[0]
+
+        next_id = rng.choice(len(probs), p=probs)
+
+        ids.append(int(next_id))
+        current_id = int(next_id)
+
+    return decode_ids(ids, itos)
 
 # Step 74 - linear_forward (not yet solved)
 # TODO: implement
