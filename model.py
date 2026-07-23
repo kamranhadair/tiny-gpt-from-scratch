@@ -1110,8 +1110,24 @@ def logits_to_probs_rowwise(logits: np.ndarray) -> np.ndarray:
     """
     return stable_softmax_2d_rowwise(logits)
 
-# Step 64 - gather_correct_token_probs (not yet solved)
-# TODO: implement
+# Step 64 - gather_correct_token_probs
+import numpy as np
+
+def gather_correct_token_probs(
+    probs: np.ndarray,
+    targets: np.ndarray
+) -> np.ndarray:
+    """
+    Gather the probability assigned to the correct target token for each example.
+
+    Args:
+        probs (np.ndarray): Probability matrix of shape (B, V).
+        targets (np.ndarray): Target token IDs of shape (B,).
+
+    Returns:
+        np.ndarray: 1D array of length B containing the correct-class probabilities.
+    """
+    return probs[np.arange(len(targets)), targets]
 
 # Step 65 - cross_entropy_loss (not yet solved)
 # TODO: implement
