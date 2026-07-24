@@ -1409,8 +1409,22 @@ def linear_backward_dx(dy: np.ndarray, cache: dict) -> np.ndarray:
     w = cache["w"]
     return matmul(dy, transpose_matrix(w))
 
-# Step 78 - linear_backward_dw (not yet solved)
-# TODO: implement
+# Step 78 - linear_backward_dw
+import numpy as np
+
+def linear_backward_dw(dy: np.ndarray, cache: dict) -> np.ndarray:
+    """
+    Compute the gradient of the loss with respect to the weight matrix W.
+
+    Args:
+        dy (np.ndarray): Upstream gradient of shape (B, D_out).
+        cache (dict): Cache from linear_forward containing 'x' and 'w'.
+
+    Returns:
+        np.ndarray: Gradient with respect to W of shape (D_in, D_out).
+    """
+    x = cache["x"]
+    return matmul(transpose_matrix(x), dy)
 
 # Step 79 - bias_add_forward (not yet solved)
 # TODO: implement
