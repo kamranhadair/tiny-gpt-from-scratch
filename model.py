@@ -1665,8 +1665,22 @@ def layernorm_backward_subtract_mean(dy: np.ndarray, cache: dict) -> np.ndarray:
     mean_dy = sum_keepdims(dy, axis=-1) / d
     return dy - mean_dy
 
-# Step 89 - layernorm_backward_divide_std (not yet solved)
-# TODO: implement
+# Step 89 - layernorm_backward_divide_std
+import numpy as np
+
+def layernorm_backward_divide_std(dy: np.ndarray, cache: dict) -> np.ndarray:
+    """
+    Backpropagate through the divide-by-standard-deviation step only.
+
+    Args:
+        dy (np.ndarray): Upstream gradient, shape (..., D).
+        cache (dict): Forward cache containing 'x_hat', 'var', and 'eps'.
+
+    Returns:
+        np.ndarray: Gradient with respect to (x - mean), same shape as dy.
+    """
+    std = np.sqrt(cache["var"] + cache["eps"])
+    return dy / std
 
 # Step 90 - layernorm_backward_full (not yet solved)
 # TODO: implement
