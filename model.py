@@ -1597,8 +1597,55 @@ def layernorm_forward_normalize(
     """
     return (x - mean) / np.sqrt(var + eps)
 
-# Step 87 - layernorm_forward_affine (not yet solved)
-# TODO: implement
+# Step 87 - layernorm_forward_affine
+import numpy as np
+
+def layernorm_forward_affine(
+    x: np.ndarray,
+    gamma: np.ndarray,
+    beta: np.ndarray,
+    eps: float
+) -> dict:
+    """
+    Forward pass for LayerNorm with affine transform.
+
+    Args:
+        x (np.ndarray): Input of shape (B, D).
+        gamma (np.ndarray): Scale parameter of shape (D,).
+        beta (np.ndarray): Shift parameter of shape (D,).
+        eps (float): Numerical stability constant.
+
+    Returns:
+        dict: {
+            "y": Output of shape (B, D),
+            "cache": {
+                "x": x,
+                "x_hat": x_hat,
+                "mean": mean,
+                "var": var,
+                "gamma": gamma,
+                "eps": eps,
+            }
+        }
+    """
+    mean = layernorm_forward_mean(x)
+    var = layernorm_forward_variance(x, mean)
+    x_hat = layernorm_forward_normalize(x, mean, var, eps)
+
+    scaled = elementwise_multiply(x_hat, gamma)
+    y = vector_matrix_broadcast_add(scaled, beta)
+
+    return {
+        "y": y,
+        "cache": {
+            "x": x,
+            "x_hat": x_hat,
+            "mean": mean,
+            "var": var,
+            "gamma": gamma,
+            "eps": eps,
+        },
+    }
 
 # Step 88 - layernorm_backward_subtract_mean (not yet solved)
 # TODO: implement
