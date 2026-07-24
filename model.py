@@ -1498,8 +1498,22 @@ def relu_forward(x: np.ndarray) -> dict:
         },
     }
 
-# Step 82 - relu_backward (not yet solved)
-# TODO: implement
+# Step 82 - relu_backward
+import numpy as np
+
+def relu_backward(dy: np.ndarray, cache: dict) -> np.ndarray:
+    """
+    Backpropagate through a ReLU activation.
+
+    Args:
+        dy (np.ndarray): Upstream gradient.
+        cache (dict): Cache from relu_forward containing 'x'.
+
+    Returns:
+        np.ndarray: Gradient with respect to the input x.
+    """
+    x = cache["x"]
+    return dy * (x > 0)
 
 # Step 83 - softmax_cross_entropy_backward (not yet solved)
 # TODO: implement
