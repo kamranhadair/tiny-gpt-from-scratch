@@ -1574,8 +1574,28 @@ def layernorm_forward_variance(x: np.ndarray, mean: np.ndarray) -> np.ndarray:
     sq_diff = diff ** 2
     return sum_keepdims(sq_diff, axis=-1) / x.shape[-1]
 
-# Step 86 - layernorm_forward_normalize (not yet solved)
-# TODO: implement
+# Step 86 - layernorm_forward_normalize
+import numpy as np
+
+def layernorm_forward_normalize(
+    x: np.ndarray,
+    mean: np.ndarray,
+    var: np.ndarray,
+    eps: float
+) -> np.ndarray:
+    """
+    Normalize x using the provided per-row mean and variance.
+
+    Args:
+        x (np.ndarray): Input array of shape (..., D).
+        mean (np.ndarray): Per-row mean of shape (..., 1).
+        var (np.ndarray): Per-row variance of shape (..., 1).
+        eps (float): Small constant for numerical stability.
+
+    Returns:
+        np.ndarray: Normalized array with the same shape as x.
+    """
+    return (x - mean) / np.sqrt(var + eps)
 
 # Step 87 - layernorm_forward_affine (not yet solved)
 # TODO: implement
