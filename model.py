@@ -1556,8 +1556,23 @@ def layernorm_forward_mean(x: np.ndarray) -> np.ndarray:
     """
     return sum_keepdims(x, axis=-1) / x.shape[-1]
 
-# Step 85 - layernorm_forward_variance (not yet solved)
-# TODO: implement
+# Step 85 - layernorm_forward_variance
+import numpy as np
+
+def layernorm_forward_variance(x: np.ndarray, mean: np.ndarray) -> np.ndarray:
+    """
+    Compute the per-row (last-axis) population variance.
+
+    Args:
+        x (np.ndarray): Input array of shape (..., D).
+        mean (np.ndarray): Mean over the last axis with shape (..., 1).
+
+    Returns:
+        np.ndarray: Variance over the last axis with shape (..., 1).
+    """
+    diff = x - mean
+    sq_diff = diff ** 2
+    return sum_keepdims(sq_diff, axis=-1) / x.shape[-1]
 
 # Step 86 - layernorm_forward_normalize (not yet solved)
 # TODO: implement
