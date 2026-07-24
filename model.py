@@ -1515,8 +1515,31 @@ def relu_backward(dy: np.ndarray, cache: dict) -> np.ndarray:
     x = cache["x"]
     return dy * (x > 0)
 
-# Step 83 - softmax_cross_entropy_backward (not yet solved)
-# TODO: implement
+# Step 83 - softmax_cross_entropy_backward
+import numpy as np
+
+def softmax_cross_entropy_backward(
+    probs: np.ndarray,
+    targets: np.ndarray
+) -> np.ndarray:
+    """
+    Compute the gradient of the mean cross-entropy loss with respect
+    to the pre-softmax logits.
+
+    Args:
+        probs (np.ndarray): Softmax probabilities of shape (B, V).
+        targets (np.ndarray): Integer target labels of shape (B,).
+
+    Returns:
+        np.ndarray: Gradient dlogits of shape (B, V).
+    """
+    batch_size = probs.shape[0]
+
+    dlogits = probs.copy()
+    dlogits[np.arange(batch_size), targets] -= 1.0
+    dlogits /= batch_size
+
+    return dlogits
 
 # Step 84 - layernorm_forward_mean (not yet solved)
 # TODO: implement
