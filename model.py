@@ -1454,8 +1454,22 @@ def bias_add_forward(x: np.ndarray, b: np.ndarray) -> dict:
         },
     }
 
-# Step 80 - bias_add_backward_db (not yet solved)
-# TODO: implement
+# Step 80 - bias_add_backward_db
+import numpy as np
+
+def bias_add_backward_db(dy: np.ndarray, cache: dict) -> np.ndarray:
+    """
+    Compute the gradient with respect to the bias vector.
+
+    Args:
+        dy (np.ndarray): Upstream gradient of shape (B, D).
+        cache (dict): Contains 'b_shape'.
+
+    Returns:
+        np.ndarray: Bias gradient of shape (D,).
+    """
+    db = sum_axis0(dy)
+    return db.reshape(cache["b_shape"])
 
 # Step 81 - relu_forward (not yet solved)
 # TODO: implement
