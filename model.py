@@ -1344,8 +1344,35 @@ def sample_from_neural_bigram(
 
     return decode_ids(ids, itos)
 
-# Step 74 - linear_forward (not yet solved)
-# TODO: implement
+# Step 74 - linear_forward
+import numpy as np
+
+def linear_forward(x: np.ndarray, w: np.ndarray) -> dict:
+    """
+    Run a bias-free linear layer.
+
+    Args:
+        x (np.ndarray): Input of shape (B, D_in).
+        w (np.ndarray): Weight matrix of shape (D_in, D_out).
+
+    Returns:
+        dict: {
+            "y": Output activations of shape (B, D_out),
+            "cache": {
+                "x": x,
+                "w": w
+            }
+        }
+    """
+    y = matmul(x, w)
+
+    return {
+        "y": y,
+        "cache": {
+            "x": x,
+            "w": w,
+        },
+    }
 
 # Step 75 - derive_dx_on_paper (not yet solved)
 # TODO: implement
