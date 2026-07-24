@@ -1731,8 +1731,41 @@ def layernorm_backward_full(dy: np.ndarray, cache: dict) -> dict:
         "dbeta": dbeta,
     }
 
-# Step 91 - layernorm_backward_implementation (not yet solved)
-# TODO: implement
+# Step 91 - layernorm_backward_implementation
+import numpy as np
+
+def layernorm_backward_implementation(d_out: np.ndarray, cache: dict) -> dict:
+    x = cache["x"]
+    x_hat = cache["x_hat"]
+    var = cache["var"]
+    gamma = cache["gamma"]
+    eps = cache["eps"]
+
+    D = x.shape[-1]
+
+    # Parameter gradients
+    dbeta = sum_axis0(d_out)
+    dgamma = sum_axis0(d_out * x_hat)
+
+    # Gradient through affine transform
+    dxhat = d_out * gamma
+
+    inv_std = 1.0 / np.sqrt(var + eps)
+
+    # LayerNorm input gradient
+    dx = (
+        inv_std / D
+    ) * (
+        D * dxhat
+        - sum_keepdims(dxhat, axis=-1)
+        - x_hat * sum_keepdims(dxhat * x_hat, axis=-1)
+    )
+
+    return {
+        "dx": dx,
+        "dgamma": dgamma,
+        "dbeta": dbeta,
+    }
 
 # Step 92 - create_token_embedding (not yet solved)
 # TODO: implement
