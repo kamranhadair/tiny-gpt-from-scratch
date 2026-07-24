@@ -1392,8 +1392,22 @@ def derive_linear_dw_on_paper() -> str:
         "Shape check: X is (B, D_in), dY is (B, D_out), so dL/dW is (D_in, D_out)."
     )
 
-# Step 77 - linear_backward_dx (not yet solved)
-# TODO: implement
+# Step 77 - linear_backward_dx
+import numpy as np
+
+def linear_backward_dx(dy: np.ndarray, cache: dict) -> np.ndarray:
+    """
+    Compute the gradient of the loss with respect to the input X.
+
+    Args:
+        dy (np.ndarray): Upstream gradient of shape (B, D_out).
+        cache (dict): Cache from linear_forward containing 'x' and 'w'.
+
+    Returns:
+        np.ndarray: Gradient with respect to X, shape (B, D_in).
+    """
+    w = cache["w"]
+    return matmul(dy, transpose_matrix(w))
 
 # Step 78 - linear_backward_dw (not yet solved)
 # TODO: implement
