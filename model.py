@@ -1682,8 +1682,54 @@ def layernorm_backward_divide_std(dy: np.ndarray, cache: dict) -> np.ndarray:
     std = np.sqrt(cache["var"] + cache["eps"])
     return dy / std
 
-# Step 90 - layernorm_backward_full (not yet solved)
-# TODO: implement
+# Step 90 - layernorm_backward_full
+import numpy as np
+
+def layernorm_backward_full(dy: np.ndarray, cache: dict) -> dict:
+    """
+    Complete backward pass for LayerNorm.
+
+    Args:
+        dy: Upstream gradient of shape (..., D).
+        cache: Forward cache from layernorm_forward_affine.
+
+    Returns:
+        dict with keys:
+            'dx'
+            'dgamma'
+            'dbeta'
+    """
+    x = cache["x"]
+    x_hat = cache["x_hat"]
+    var = cache["var"]
+    gamma = cache["gamma"]
+    eps = cache["eps"]
+
+    D = x.shape[-1]
+
+    # affine gradients
+    dbeta = sum_axis0(dy)
+    dgamma = sum_axis0(dy * x_hat)
+
+    # gradient wrt normalized activations
+    dxhat = dy * gamma
+
+    inv_std = 1.0 / np.sqrt(var + eps)
+
+    # standard LayerNorm backward
+    dx = (
+        inv_std / D
+    ) * (
+        D * dxhat
+        - sum_keepdims(dxhat, axis=-1)
+        - x_hat * sum_keepdims(dxhat * x_hat, axis=-1)
+    )
+
+    return {
+        "dx": dx,
+        "dgamma": dgamma,
+        "dbeta": dbeta,
+    }
 
 # Step 91 - layernorm_backward_implementation (not yet solved)
 # TODO: implement
