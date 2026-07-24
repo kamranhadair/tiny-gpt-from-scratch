@@ -1382,8 +1382,15 @@ def derive_dx_on_paper() -> str:
         "shapes: X (B, In), W (In, Out), dY (B, Out) -> dL/dX (B, In)"
     )
 
-# Step 76 - derive_linear_dw_on_paper (not yet solved)
-# TODO: implement
+# Step 76 - derive_linear_dw_on_paper
+def derive_linear_dw_on_paper() -> str:
+    return (
+        "Y = X @ W\n"
+        "The loss depends on W only through the matrix product, so applying "
+        "the chain rule accumulates contributions from every example in the batch.\n"
+        "dL/dW = X.T @ dY\n"
+        "Shape check: X is (B, D_in), dY is (B, D_out), so dL/dW is (D_in, D_out)."
+    )
 
 # Step 77 - linear_backward_dx (not yet solved)
 # TODO: implement
