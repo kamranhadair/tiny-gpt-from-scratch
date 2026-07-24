@@ -1426,8 +1426,33 @@ def linear_backward_dw(dy: np.ndarray, cache: dict) -> np.ndarray:
     x = cache["x"]
     return matmul(transpose_matrix(x), dy)
 
-# Step 79 - bias_add_forward (not yet solved)
-# TODO: implement
+# Step 79 - bias_add_forward
+import numpy as np
+
+def bias_add_forward(x: np.ndarray, b: np.ndarray) -> dict:
+    """
+    Add a bias vector to every row of a batch.
+
+    Args:
+        x (np.ndarray): Input matrix of shape (B, D).
+        b (np.ndarray): Bias vector of shape (D,).
+
+    Returns:
+        dict: {
+            "y": Output matrix of shape (B, D),
+            "cache": {
+                "b_shape": b.shape
+            }
+        }
+    """
+    y = vector_matrix_broadcast_add(x, b)
+
+    return {
+        "y": y,
+        "cache": {
+            "b_shape": b.shape,
+        },
+    }
 
 # Step 80 - bias_add_backward_db (not yet solved)
 # TODO: implement
