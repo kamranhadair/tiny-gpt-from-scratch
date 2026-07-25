@@ -1890,8 +1890,26 @@ def add_token_and_positional_embeddings(
     """
     return token_embeddings + positional_embeddings
 
-# Step 98 - embedding_sum_backward (not yet solved)
-# TODO: implement
+# Step 98 - embedding_sum_backward
+import numpy as np
+
+def embedding_sum_backward(d_out: np.ndarray) -> dict:
+    """
+    Backward pass for token + positional embedding addition.
+
+    Args:
+        d_out (np.ndarray): Upstream gradient of shape (B, T, d_model).
+
+    Returns:
+        dict: {
+            "d_token_emb": Gradient for token embeddings, shape (B, T, d_model),
+            "d_pos_emb": Gradient for positional embeddings, shape (T, d_model)
+        }
+    """
+    return {
+        "d_token_emb": d_out,
+        "d_pos_emb": sum_axis0(d_out),
+    }
 
 # Step 99 - create_qkv_projections (not yet solved)
 # TODO: implement
