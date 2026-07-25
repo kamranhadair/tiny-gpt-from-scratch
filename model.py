@@ -1998,8 +1998,21 @@ def compute_attention_scores(q: np.ndarray, k: np.ndarray) -> np.ndarray:
     """
     return matmul(q, np.swapaxes(k, -1, -2))
 
-# Step 104 - scale_attention_scores (not yet solved)
-# TODO: implement
+# Step 104 - scale_attention_scores
+import numpy as np
+
+def scale_attention_scores(scores, d_head):
+    """
+    Scale raw attention scores by sqrt(d_head).
+
+    Args:
+        scores: np.ndarray of shape (B, T, T)
+        d_head: int, dimension of each attention head
+
+    Returns:
+        np.ndarray of shape (B, T, T)
+    """
+    return scores / np.sqrt(d_head)
 
 # Step 105 - build_causal_mask (not yet solved)
 # TODO: implement
