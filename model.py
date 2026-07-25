@@ -1871,8 +1871,24 @@ def slice_positional_embedding(P: np.ndarray, seq_len: int) -> np.ndarray:
     """
     return P[:seq_len]
 
-# Step 97 - add_token_and_positional_embeddings (not yet solved)
-# TODO: implement
+# Step 97 - add_token_and_positional_embeddings
+import numpy as np
+
+def add_token_and_positional_embeddings(
+    token_embeddings: np.ndarray,
+    positional_embeddings: np.ndarray
+) -> np.ndarray:
+    """
+    Add token and positional embeddings.
+
+    Args:
+        token_embeddings (np.ndarray): Shape (B, T, d_model).
+        positional_embeddings (np.ndarray): Shape (T, d_model).
+
+    Returns:
+        np.ndarray: Combined embeddings of shape (B, T, d_model).
+    """
+    return token_embeddings + positional_embeddings
 
 # Step 98 - embedding_sum_backward (not yet solved)
 # TODO: implement
