@@ -2465,8 +2465,20 @@ def multihead_weighted_sum(weights, v_heads):
     """
     return np.matmul(weights, v_heads)
 
-# Step 126 - transpose_heads_to_back (not yet solved)
-# TODO: implement
+# Step 126 - transpose_heads_to_back
+import numpy as np
+
+def transpose_heads_to_back(x):
+    """
+    Move the heads axis back after the sequence axis.
+
+    Args:
+        x: np.ndarray of shape (B, n_heads, T, d_head)
+
+    Returns:
+        np.ndarray of shape (B, T, n_heads, d_head)
+    """
+    return np.ascontiguousarray(x.transpose(0, 2, 1, 3))
 
 # Step 127 - get_multihead_output_sequence_length (not yet solved)
 # TODO: implement
