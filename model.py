@@ -2493,8 +2493,21 @@ def get_multihead_output_sequence_length(x_heads_back):
     """
     return int(get_array_shape(x_heads_back)[1])
 
-# Step 128 - merge_heads_to_d_model (not yet solved)
-# TODO: implement
+# Step 128 - merge_heads_to_d_model
+import numpy as np
+
+def merge_heads_to_d_model(x):
+    """
+    Merge attention heads and head dimensions into d_model.
+
+    Args:
+        x: np.ndarray of shape (B, T, n_heads, d_head)
+
+    Returns:
+        np.ndarray of shape (B, T, n_heads * d_head)
+    """
+    B, T, n_heads, d_head = x.shape
+    return x.reshape(B, T, n_heads * d_head)
 
 # Step 129 - multihead_output_projection_forward (not yet solved)
 # TODO: implement
