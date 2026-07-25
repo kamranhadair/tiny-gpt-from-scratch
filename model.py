@@ -1767,8 +1767,22 @@ def layernorm_backward_implementation(d_out: np.ndarray, cache: dict) -> dict:
         "dbeta": dbeta,
     }
 
-# Step 92 - create_token_embedding (not yet solved)
-# TODO: implement
+# Step 92 - create_token_embedding
+import numpy as np
+
+def create_token_embedding(vocab_size: int, d_model: int, scale: float = 0.02) -> np.ndarray:
+    """
+    Create a token embedding matrix.
+
+    Args:
+        vocab_size (int): Number of tokens in the vocabulary.
+        d_model (int): Embedding dimension.
+        scale (float): Scaling factor for initialization.
+
+    Returns:
+        np.ndarray: Embedding matrix of shape (vocab_size, d_model).
+    """
+    return np.random.randn(vocab_size, d_model) * scale
 
 # Step 93 - token_embedding_forward (not yet solved)
 # TODO: implement
