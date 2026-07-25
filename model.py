@@ -2343,8 +2343,23 @@ def create_multihead_output_projection(d_model, scale=0.02):
         scale
     )
 
-# Step 119 - reshape_to_heads (not yet solved)
-# TODO: implement
+# Step 119 - reshape_to_heads
+import numpy as np
+
+def reshape_to_heads(x, n_heads, d_head):
+    """
+    Split the last dimension into multiple attention heads.
+
+    Args:
+        x: np.ndarray of shape (B, T, d_model)
+        n_heads: Number of attention heads.
+        d_head: Dimension of each head.
+
+    Returns:
+        np.ndarray of shape (B, T, n_heads, d_head)
+    """
+    B, T, _ = x.shape
+    return x.reshape(B, T, n_heads, d_head)
 
 # Step 120 - transpose_heads_to_front (not yet solved)
 # TODO: implement
