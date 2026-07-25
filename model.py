@@ -1855,8 +1855,21 @@ def create_positional_embedding(block_size: int,
     P = make_2d_random(block_size, d_model, seed=None)
     return scale_w_small(P, scale)
 
-# Step 96 - slice_positional_embedding (not yet solved)
-# TODO: implement
+# Step 96 - slice_positional_embedding
+import numpy as np
+
+def slice_positional_embedding(P: np.ndarray, seq_len: int) -> np.ndarray:
+    """
+    Return the positional embeddings for the current sequence length.
+
+    Args:
+        P (np.ndarray): Positional embedding matrix of shape (block_size, d_model).
+        seq_len (int): Current sequence length.
+
+    Returns:
+        np.ndarray: Array of shape (seq_len, d_model).
+    """
+    return P[:seq_len]
 
 # Step 97 - add_token_and_positional_embeddings (not yet solved)
 # TODO: implement
