@@ -2389,11 +2389,38 @@ def get_multihead_n_heads(config):
     """
     return config["n_heads"]
 
-# Step 122 - get_multihead_sequence_length (not yet solved)
-# TODO: implement
+# Step 122 - get_multihead_sequence_length
+def get_multihead_sequence_length(x):
+    """
+    Return the sequence length T from an activation tensor.
 
-# Step 123 - compute_d_head (not yet solved)
-# TODO: implement
+    Args:
+        x: np.ndarray of shape (B, T, d_model)
+
+    Returns:
+        int: Sequence length T.
+    """
+    return get_array_shape(x)[1]
+
+# Step 123 - compute_d_head
+def compute_d_head(d_model, n_heads):
+    """
+    Compute the dimension of each attention head.
+
+    Args:
+        d_model: Total model dimension.
+        n_heads: Number of attention heads.
+
+    Returns:
+        int: Dimension of each attention head.
+
+    Raises:
+        ValueError: If d_model is not evenly divisible by n_heads.
+    """
+    if d_model % n_heads != 0:
+        raise ValueError("d_model must be divisible by n_heads")
+
+    return d_model // n_heads
 
 # Step 124 - multihead_masked_softmax_scores (not yet solved)
 # TODO: implement
