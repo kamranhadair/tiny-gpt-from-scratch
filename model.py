@@ -2376,8 +2376,18 @@ def transpose_heads_to_front(x):
     """
     return np.ascontiguousarray(x.transpose(0, 2, 1, 3))
 
-# Step 121 - get_multihead_n_heads (not yet solved)
-# TODO: implement
+# Step 121 - get_multihead_n_heads
+def get_multihead_n_heads(config):
+    """
+    Return the number of attention heads from the config.
+
+    Args:
+        config: Dictionary produced by choose_attention_head_config.
+
+    Returns:
+        Integer number of attention heads.
+    """
+    return config["n_heads"]
 
 # Step 122 - get_multihead_sequence_length (not yet solved)
 # TODO: implement
