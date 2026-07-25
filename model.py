@@ -2509,8 +2509,35 @@ def merge_heads_to_d_model(x):
     B, T, n_heads, d_head = x.shape
     return x.reshape(B, T, n_heads * d_head)
 
-# Step 129 - multihead_output_projection_forward (not yet solved)
-# TODO: implement
+# Step 129 - multihead_output_projection_forward
+def multihead_output_projection_forward(merged, w_out, b_out):
+    """
+    Forward pass for multi-head attention output projection.
+
+    Args:
+        merged (np.ndarray): Merged multi-head output of shape (B, T, d_model).
+        w_out (np.ndarray): Output projection matrix of shape (d_model, d_model).
+        b_out (np.ndarray): Output projection bias of shape (d_model,).
+
+    Returns:
+        dict: {
+            "out": Projected output of shape (B, T, d_model),
+            "cache": {
+                "merged": merged,
+                "w_out": w_out,
+            }
+        }
+    """
+    linear_out = linear_forward(merged, w_out)
+    biased_out = bias_add_forward(linear_out["y"], b_out)
+
+    return {
+        "out": biased_out["y"],
+        "cache": {
+            "merged": merged,
+            "w_out": w_out,
+        },
+    }
 
 # Step 130 - multihead_reshape_transpose_backward (not yet solved)
 # TODO: implement
