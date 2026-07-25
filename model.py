@@ -1836,8 +1836,24 @@ def token_embedding_backward(d_out: np.ndarray, cache: dict) -> np.ndarray:
 
     return dE
 
-# Step 95 - create_positional_embedding (not yet solved)
-# TODO: implement
+# Step 95 - create_positional_embedding
+def create_positional_embedding(block_size: int,
+                                d_model: int,
+                                scale: float = 0.02) -> np.ndarray:
+    """
+    Create a learned positional embedding matrix.
+
+    Args:
+        block_size (int): Maximum sequence length.
+        d_model (int): Embedding dimension.
+        scale (float): Scaling factor for initialization.
+
+    Returns:
+        np.ndarray: Positional embedding matrix of shape
+                    (block_size, d_model).
+    """
+    P = make_2d_random(block_size, d_model, seed=None)
+    return scale_w_small(P, scale)
 
 # Step 96 - slice_positional_embedding (not yet solved)
 # TODO: implement
