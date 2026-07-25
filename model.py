@@ -2234,8 +2234,52 @@ def qk_scores_backward(d_scores, cache):
         "d_k": d_k,
     }
 
-# Step 115 - qkv_projection_backward (not yet solved)
-# TODO: implement
+# Step 115 - qkv_projection_backward
+import numpy as np
+
+def qkv_projection_backward(d_q, d_k, d_v, cache):
+    """
+    Backward pass for Q/K/V linear projections.
+
+    Args:
+        d_q, d_k, d_v: np.ndarray of shape (B, T, d_head)
+        cache: dict containing:
+            - 'x': np.ndarray of shape (B, T, d_model)
+            - 'w_q', 'w_k', 'w_v': np.ndarray of shape (d_model, d_head)
+
+    Returns:
+        dict with keys:
+            - 'dx': (B, T, d_model)
+            - 'dw_q': (d_model, d_head)
+            - 'dw_k': (d_model, d_head)
+            - 'dw_v': (d_model, d_head)
+    """
+    x = cache["x"]
+    w_q = cache["w_q"]
+    w_k = cache["w_k"]
+    w_v = cache["w_v"]
+
+    # Gradient w.r.t. input
+    dx = (
+        np.matmul(d_q, w_q.T) +
+        np.matmul(d_k, w_k.T) +
+        np.matmul(d_v, w_v.T)
+    )
+
+    # Flatten batch and sequence dimensions
+    B, T, d_model = x.shape
+    x_flat = x.reshape(B * T, d_model)
+
+    dw_q = x_flat.T @ d_q.reshape(B * T, -1)
+    dw_k = x_flat.T @ d_k.reshape(B * T, -1)
+    dw_v = x_flat.T @ d_v.reshape(B * T, -1)
+
+    return {
+        "dx": dx,
+        "dw_q": dw_q,
+        "dw_k": dw_k,
+        "dw_v": dw_v,
+    }
 
 # Step 116 - choose_attention_head_config (not yet solved)
 # TODO: implement
