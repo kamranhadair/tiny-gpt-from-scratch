@@ -1966,8 +1966,21 @@ def compute_key(x: np.ndarray, w_k: np.ndarray) -> np.ndarray:
     """
     return matmul(x, w_k)
 
-# Step 102 - compute_value (not yet solved)
-# TODO: implement
+# Step 102 - compute_value
+import numpy as np
+
+def compute_value(x: np.ndarray, w_v: np.ndarray) -> np.ndarray:
+    """
+    Project input activations into the value space.
+
+    Args:
+        x (np.ndarray): Input tensor of shape (B, T, d_model).
+        w_v (np.ndarray): Value projection matrix of shape (d_model, d_head).
+
+    Returns:
+        np.ndarray: Value tensor of shape (B, T, d_head).
+    """
+    return matmul(x, w_v)
 
 # Step 103 - compute_attention_scores (not yet solved)
 # TODO: implement
