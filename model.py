@@ -2593,8 +2593,27 @@ def ffn_linear_one_forward(x, w1, b1):
         },
     }
 
-# Step 132 - ffn_activation_forward (not yet solved)
-# TODO: implement
+# Step 132 - ffn_activation_forward
+def ffn_activation_forward(h1):
+    """
+    Activation stage of the Transformer feed-forward network.
+
+    Applies ReLU elementwise to the pre-activation hidden tensor.
+
+    Args:
+        h1 (np.ndarray): Pre-activation tensor of shape (B, T, d_ff).
+
+    Returns:
+        tuple:
+            a1 (np.ndarray): Post-activation tensor of shape (B, T, d_ff).
+            cache (dict): {"h1": h1}
+    """
+    relu_out = relu_forward(h1)
+
+    a1 = relu_out["y"]
+    cache = {"h1": h1}
+
+    return a1, cache
 
 # Step 133 - ffn_linear_two_forward (not yet solved)
 # TODO: implement
