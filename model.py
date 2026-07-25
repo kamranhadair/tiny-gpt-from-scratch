@@ -1809,8 +1809,32 @@ def token_embedding_forward(token_ids: np.ndarray, embedding_matrix: np.ndarray)
 
     return out, cache
 
-# Step 94 - token_embedding_backward (not yet solved)
-# TODO: implement
+# Step 94 - token_embedding_backward
+import numpy as np
+
+def token_embedding_backward(d_out: np.ndarray, cache: dict) -> np.ndarray:
+    """
+    Backward pass for token embedding lookup.
+
+    Args:
+        d_out (np.ndarray): Upstream gradient of shape (B, T, d_model).
+        cache (dict): Cache from token_embedding_forward containing
+                      'token_ids' and 'vocab_size'.
+
+    Returns:
+        np.ndarray: Gradient with respect to the embedding matrix,
+                    of shape (vocab_size, d_model).
+    """
+    token_ids = cache["token_ids"]
+    vocab_size = cache["vocab_size"]
+    d_model = d_out.shape[-1]
+
+    dE = np.zeros((vocab_size, d_model), dtype=d_out.dtype)
+
+    # Scatter-add gradients into the corresponding embedding rows.
+    np.add.at(dE, token_ids, d_out)
+
+    return dE
 
 # Step 95 - create_positional_embedding (not yet solved)
 # TODO: implement
