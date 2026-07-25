@@ -1934,8 +1934,21 @@ def create_qkv_projections(d_model, d_head, scale=0.02):
         "Wv": scale_w_small(make_2d_random(d_model, d_head, seed=2), scale),
     }
 
-# Step 100 - compute_query (not yet solved)
-# TODO: implement
+# Step 100 - compute_query
+import numpy as np
+
+def compute_query(x: np.ndarray, w_q: np.ndarray) -> np.ndarray:
+    """
+    Project input activations into the query space.
+
+    Args:
+        x (np.ndarray): Input tensor of shape (B, T, d_model).
+        w_q (np.ndarray): Query projection matrix of shape (d_model, d_head).
+
+    Returns:
+        np.ndarray: Query tensor of shape (B, T, d_head).
+    """
+    return matmul(x, w_q)
 
 # Step 101 - compute_key (not yet solved)
 # TODO: implement
