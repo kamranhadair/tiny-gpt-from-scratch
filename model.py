@@ -2326,8 +2326,22 @@ def create_multihead_qkv_projections(d_model, scale=0.02):
         "Wv": scale_w_small(make_2d_random(d_model, d_model, seed=2), scale),
     }
 
-# Step 118 - create_multihead_output_projection (not yet solved)
-# TODO: implement
+# Step 118 - create_multihead_output_projection
+def create_multihead_output_projection(d_model, scale=0.02):
+    """
+    Initialize the multi-head attention output projection matrix.
+
+    Args:
+        d_model: Model dimension.
+        scale: Scaling factor for small weight initialization.
+
+    Returns:
+        Wo: np.ndarray of shape (d_model, d_model)
+    """
+    return scale_w_small(
+        make_2d_random(d_model, d_model, seed=0),
+        scale
+    )
 
 # Step 119 - reshape_to_heads (not yet solved)
 # TODO: implement
