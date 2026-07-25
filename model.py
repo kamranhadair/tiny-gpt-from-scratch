@@ -2308,8 +2308,23 @@ def choose_attention_head_config(d_model, n_heads):
         "d_model": d_model,
     }
 
-# Step 117 - create_multihead_qkv_projections (not yet solved)
-# TODO: implement
+# Step 117 - create_multihead_qkv_projections
+def create_multihead_qkv_projections(d_model, scale=0.02):
+    """
+    Create the Q, K, and V projection matrices for multi-head attention.
+
+    Args:
+        d_model: Model dimension.
+        scale: Scaling factor for small weight initialization.
+
+    Returns:
+        dict with keys 'Wq', 'Wk', 'Wv', each of shape (d_model, d_model).
+    """
+    return {
+        "Wq": scale_w_small(make_2d_random(d_model, d_model, seed=0), scale),
+        "Wk": scale_w_small(make_2d_random(d_model, d_model, seed=1), scale),
+        "Wv": scale_w_small(make_2d_random(d_model, d_model, seed=2), scale),
+    }
 
 # Step 118 - create_multihead_output_projection (not yet solved)
 # TODO: implement
