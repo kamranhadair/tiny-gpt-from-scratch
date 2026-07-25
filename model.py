@@ -2449,8 +2449,21 @@ def multihead_masked_softmax_scores(scores, causal_mask):
     # Restore shape
     return weights.reshape(B, n_heads, T, T)
 
-# Step 125 - multihead_weighted_sum (not yet solved)
-# TODO: implement
+# Step 125 - multihead_weighted_sum
+import numpy as np
+
+def multihead_weighted_sum(weights, v_heads):
+    """
+    Compute weighted sum of values for each attention head.
+
+    Args:
+        weights: np.ndarray of shape (B, n_heads, T, T)
+        v_heads: np.ndarray of shape (B, n_heads, T, d_head)
+
+    Returns:
+        np.ndarray of shape (B, n_heads, T, d_head)
+    """
+    return np.matmul(weights, v_heads)
 
 # Step 126 - transpose_heads_to_back (not yet solved)
 # TODO: implement
