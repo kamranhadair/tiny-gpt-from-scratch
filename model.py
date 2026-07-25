@@ -1950,8 +1950,21 @@ def compute_query(x: np.ndarray, w_q: np.ndarray) -> np.ndarray:
     """
     return matmul(x, w_q)
 
-# Step 101 - compute_key (not yet solved)
-# TODO: implement
+# Step 101 - compute_key
+import numpy as np
+
+def compute_key(x: np.ndarray, w_k: np.ndarray) -> np.ndarray:
+    """
+    Project input activations into the key space.
+
+    Args:
+        x (np.ndarray): Input tensor of shape (B, T, d_model).
+        w_k (np.ndarray): Key projection matrix of shape (d_model, d_head).
+
+    Returns:
+        np.ndarray: Key tensor of shape (B, T, d_head).
+    """
+    return matmul(x, w_k)
 
 # Step 102 - compute_value (not yet solved)
 # TODO: implement
