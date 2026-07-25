@@ -2561,8 +2561,37 @@ def multihead_reshape_transpose_backward(d_merged, shape_info):
     heads_back = reshape_to_heads(d_merged, n_heads, d_head)
     return transpose_heads_to_front(heads_back)
 
-# Step 131 - ffn_linear_one_forward (not yet solved)
-# TODO: implement
+# Step 131 - ffn_linear_one_forward
+def ffn_linear_one_forward(x, w1, b1):
+    """
+    First linear layer of the Transformer feed-forward network.
+
+    Lifts activations from d_model up to the wider hidden size d_ff.
+
+    Args:
+        x (np.ndarray): Input tensor of shape (B, T, d_model).
+        w1 (np.ndarray): Weight matrix of shape (d_model, d_ff).
+        b1 (np.ndarray): Bias vector of shape (d_ff,).
+
+    Returns:
+        dict: {
+            "h1": Pre-activation tensor of shape (B, T, d_ff),
+            "cache": {
+                "x": x,
+                "w1": w1,
+            }
+        }
+    """
+    linear_out = linear_forward(x, w1)
+    biased_out = bias_add_forward(linear_out["y"], b1)
+
+    return {
+        "h1": biased_out["y"],
+        "cache": {
+            "x": x,
+            "w1": w1,
+        },
+    }
 
 # Step 132 - ffn_activation_forward (not yet solved)
 # TODO: implement
