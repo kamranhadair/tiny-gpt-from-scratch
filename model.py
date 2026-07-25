@@ -1982,8 +1982,21 @@ def compute_value(x: np.ndarray, w_v: np.ndarray) -> np.ndarray:
     """
     return matmul(x, w_v)
 
-# Step 103 - compute_attention_scores (not yet solved)
-# TODO: implement
+# Step 103 - compute_attention_scores
+import numpy as np
+
+def compute_attention_scores(q: np.ndarray, k: np.ndarray) -> np.ndarray:
+    """
+    Compute raw attention scores.
+
+    Args:
+        q: Query tensor of shape (B, T, d_head).
+        k: Key tensor of shape (B, T, d_head).
+
+    Returns:
+        Attention scores of shape (B, T, T).
+    """
+    return matmul(q, np.swapaxes(k, -1, -2))
 
 # Step 104 - scale_attention_scores (not yet solved)
 # TODO: implement
