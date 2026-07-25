@@ -2094,8 +2094,43 @@ def apply_output_projection(attn_out, w_o):
     """
     return np.matmul(attn_out, w_o)
 
-# Step 110 - output_projection_backward (not yet solved)
-# TODO: implement
+# Step 110 - output_projection_backward
+import numpy as np
+
+def output_projection_backward(d_proj, cache):
+    """
+    Backward pass for the output projection.
+
+    Args:
+        d_proj: np.ndarray of shape (B, T, d_model)
+        cache: dict containing:
+            - 'attn_out': np.ndarray of shape (B, T, d_head)
+            - 'w_o': np.ndarray of shape (d_head, d_model)
+
+    Returns:
+        dict with:
+            - 'd_attn_out': np.ndarray of shape (B, T, d_head)
+            - 'dw_o': np.ndarray of shape (d_head, d_model)
+    """
+    attn_out = cache["attn_out"]
+    w_o = cache["w_o"]
+
+    # Gradient w.r.t. attention output
+    d_attn_out = np.matmul(d_proj, w_o.T)
+
+    # Gradient w.r.t. output projection matrix
+    B, T, d_head = attn_out.shape
+    d_model = d_proj.shape[-1]
+
+    dw_o = (
+        attn_out.reshape(B * T, d_head).T
+        @ d_proj.reshape(B * T, d_model)
+    )
+
+    return {
+        "d_attn_out": d_attn_out,
+        "dw_o": dw_o,
+    }
 
 # Step 111 - attention_value_backward (not yet solved)
 # TODO: implement
