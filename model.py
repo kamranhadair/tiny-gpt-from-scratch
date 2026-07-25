@@ -2078,8 +2078,21 @@ def attention_weighted_values(attn, v):
     """
     return np.matmul(attn, v)
 
-# Step 109 - apply_output_projection (not yet solved)
-# TODO: implement
+# Step 109 - apply_output_projection
+import numpy as np
+
+def apply_output_projection(attn_out, w_o):
+    """
+    Project attention output back to the model dimension.
+
+    Args:
+        attn_out: np.ndarray of shape (B, T, d_head)
+        w_o: np.ndarray of shape (d_head, d_model)
+
+    Returns:
+        np.ndarray of shape (B, T, d_model)
+    """
+    return np.matmul(attn_out, w_o)
 
 # Step 110 - output_projection_backward (not yet solved)
 # TODO: implement
