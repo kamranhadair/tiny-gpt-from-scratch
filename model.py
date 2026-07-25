@@ -2029,8 +2029,21 @@ def build_causal_mask(seq_len):
     """
     return np.tril(np.ones((seq_len, seq_len), dtype=bool))
 
-# Step 106 - apply_causal_mask (not yet solved)
-# TODO: implement
+# Step 106 - apply_causal_mask
+import numpy as np
+
+def apply_causal_mask(scaled_scores, causal_mask):
+    """
+    Apply a causal mask to scaled attention scores.
+
+    Args:
+        scaled_scores: np.ndarray of shape (B, T, T)
+        causal_mask: Boolean np.ndarray of shape (T, T)
+
+    Returns:
+        np.ndarray of shape (B, T, T) with masked entries set to -np.inf.
+    """
+    return np.where(causal_mask, scaled_scores, -np.inf)
 
 # Step 107 - softmax_attention_weights (not yet solved)
 # TODO: implement
