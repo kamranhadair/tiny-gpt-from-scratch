@@ -2132,8 +2132,34 @@ def output_projection_backward(d_proj, cache):
         "dw_o": dw_o,
     }
 
-# Step 111 - attention_value_backward (not yet solved)
-# TODO: implement
+# Step 111 - attention_value_backward
+import numpy as np
+
+def attention_value_backward(d_attn_out, cache):
+    """
+    Backward pass for out = attn @ v.
+
+    Args:
+        d_attn_out: np.ndarray of shape (B, T, d_head)
+        cache: dict containing:
+            - 'attn': np.ndarray of shape (B, T, T)
+            - 'v': np.ndarray of shape (B, T, d_head)
+
+    Returns:
+        dict with:
+            - 'd_attn': np.ndarray of shape (B, T, T)
+            - 'd_v': np.ndarray of shape (B, T, d_head)
+    """
+    attn = cache["attn"]
+    v = cache["v"]
+
+    d_attn = np.matmul(d_attn_out, v.transpose(0, 2, 1))
+    d_v = np.matmul(attn.transpose(0, 2, 1), d_attn_out)
+
+    return {
+        "d_attn": d_attn,
+        "d_v": d_v,
+    }
 
 # Step 112 - masked_softmax_backward (not yet solved)
 # TODO: implement
