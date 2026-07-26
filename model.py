@@ -3158,8 +3158,43 @@ def lm_head_linear_forward(x, w_lm, b_lm):
 
     return {"logits": biased_out['y'], "cache": cache}
 
-# Step 145 - full_model_forward (not yet solved)
-# TODO: implement
+# Step 145 - full_model_forward
+def full_model_forward(token_ids, model_params):
+    """Run the full Tiny GPT forward pass end-to-end."""
+    B, T = token_ids.shape
+
+    # Token + positional embeddings
+    tok_embeddings, tok_emb_cache = token_embedding_forward(token_ids, model_params['tok_emb'])
+    pos_embeddings = slice_positional_embedding(model_params['pos_emb'], T)
+    x = add_token_and_positional_embeddings(tok_embeddings, pos_embeddings)
+
+    emb_cache = {
+        'tok_emb_cache': tok_emb_cache,
+        'seq_len': T,
+    }
+
+    # Transformer block stack
+    x, block_caches = forward_through_all_blocks(x, model_params['blocks'])
+
+    # Final LayerNorm
+    x, ln_f_cache = final_layernorm_forward(
+        x, model_params['ln_f']['gamma'], model_params['ln_f']['beta']
+    )
+
+    # LM head
+    lm_out = lm_head_linear_forward(
+        x, model_params['lm_head']['w_lm'], model_params['lm_head']['b_lm']
+    )
+    logits = lm_out['logits']
+
+    caches = {
+        'emb': emb_cache,
+        'blocks': block_caches,
+        'ln_f': ln_f_cache,
+        'lm_head': lm_out['cache'],
+    }
+
+    return logits, caches
 
 # Step 146 - full_model_backward (not yet solved)
 # TODO: implement
