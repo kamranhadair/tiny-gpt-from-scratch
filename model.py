@@ -3591,7 +3591,6 @@ def crop_context_to_block_size(context: np.ndarray, block_size: int) -> np.ndarr
     return context[:, T - block_size:]
 
 # Step 158 - forward_to_get_logits
-# ── Step 158  forward_to_get_logits ──
 def forward_to_get_logits(model_params, context):
     """
     Thin inference-mode wrapper around the full model forward pass.
