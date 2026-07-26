@@ -3324,7 +3324,6 @@ def adam_increment_step(t: int) -> int:
     return t + 1
 
 # Step 150 - adam_update_first_moment
-# ── Step 150  adam_update_first_moment ──
 import numpy as np
 
 def adam_update_first_moment(m: np.ndarray, grad: np.ndarray, beta1: float) -> np.ndarray:
