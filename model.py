@@ -3034,8 +3034,32 @@ def stack_transformer_blocks(n_layers, d_model, n_heads, d_ff, scale=0.02):
 
     return blocks
 
-# Step 141 - forward_through_all_blocks (not yet solved)
-# TODO: implement
+# Step 141 - forward_through_all_blocks
+def forward_through_all_blocks(x, blocks):
+    """
+    Run the input sequentially through every Transformer block.
+
+    Args:
+        x (np.ndarray): Input tensor, shape (B, T, d_model).
+        blocks (list[dict]): List of per-block parameter dicts, each in
+                              the format consumed by transformer_block_forward.
+
+    Returns:
+        tuple:
+            y (np.ndarray): Output after passing through all blocks,
+                             same shape as x.
+            caches (list[dict]): Per-block cache dicts, in block order,
+                                  one per entry in `blocks`.
+    """
+    y = x
+    caches = []
+
+    for block_params in blocks:
+        block_out = transformer_block_forward(y, block_params)
+        y = block_out['y']
+        caches.append(block_out['cache'])
+
+    return y, caches
 
 # Step 142 - backward_through_all_blocks (not yet solved)
 # TODO: implement
