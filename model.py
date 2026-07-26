@@ -3092,8 +3092,42 @@ def backward_through_all_blocks(d_y, caches, blocks):
 
     return d_current, grads
 
-# Step 143 - final_layernorm_forward (not yet solved)
-# TODO: implement
+# Step 143 - final_layernorm_forward
+def final_layernorm_forward(x, gamma, beta, eps=1e-5):
+    """
+    Apply LayerNorm to the activations coming out of the last Transformer
+    block, normalizing each (B, T) position independently across the
+    d_model channels.
+
+    Args:
+        x (np.ndarray): Input tensor, shape (B, T, d_model).
+        gamma (np.ndarray): Learnable scale, shape (d_model,).
+        beta (np.ndarray): Learnable shift, shape (d_model,).
+        eps (float): Numerical stability constant.
+
+    Returns:
+        tuple:
+            y (np.ndarray): Normalized + affine-transformed output,
+                             shape (B, T, d_model).
+            cache (dict): {
+                'x': x,
+                'mean': per-position mean, shape (B, T, 1),
+                'var': per-position variance, shape (B, T, 1),
+                'x_hat': normalized activations, shape (B, T, d_model),
+                'gamma': gamma,
+            }
+    """
+    ln_out = layernorm_forward_affine(x, gamma, beta, eps)
+
+    cache = {
+        'x': ln_out['cache']['x'],
+        'mean': ln_out['cache']['mean'],
+        'var': ln_out['cache']['var'],
+        'x_hat': ln_out['cache']['x_hat'],
+        'gamma': ln_out['cache']['gamma'],
+    }
+
+    return ln_out['y'], cache
 
 # Step 144 - lm_head_linear_forward (not yet solved)
 # TODO: implement
