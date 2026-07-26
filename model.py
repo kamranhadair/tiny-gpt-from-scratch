@@ -3509,7 +3509,6 @@ def wire_full_training_loop(params, train_ids, val_ids, block_size, batch_size,
     return params, history
 
 # Step 155 - logging_and_validation_loss
-# ── Step 155  logging_and_validation_loss ──
 import numpy as np
 
 def logging_and_validation_loss(params, val_ids, block_size, batch_size, n_eval_batches):
