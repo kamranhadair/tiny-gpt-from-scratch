@@ -3297,7 +3297,6 @@ def initialize_adam_moments(model_params):
     return m, v
 
 # Step 148 - initialize_adam_step_counter
-# ── Step 148  initialize_adam_step_counter ──
 def initialize_adam_step_counter() -> int:
     """
     Return the initial Adam time-step counter, before any update has
