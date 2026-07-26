@@ -3663,8 +3663,22 @@ def top_k_filter(logits: np.ndarray, k: int) -> np.ndarray:
 
     return filtered
 
-# Step 162 - softmax_to_probs (not yet solved)
-# TODO: implement
+# Step 162 - softmax_to_probs
+# ── Step 162  softmax_to_probs ──
+def softmax_to_probs(logits):
+    """
+    Convert filtered logits (possibly containing -inf at masked positions)
+    into a row-wise probability distribution.
+
+    Args:
+        logits (np.ndarray): Logits of shape (1, vocab_size), typically
+                              the output of top_k_filter.
+
+    Returns:
+        np.ndarray: Probabilities of shape (1, vocab_size), each row
+                    summing to 1.
+    """
+    return stable_softmax_2d_rowwise(logits)
 
 # Step 163 - sample_one_token (not yet solved)
 # TODO: implement
