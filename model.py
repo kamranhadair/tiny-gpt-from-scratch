@@ -3634,8 +3634,34 @@ def apply_temperature(logits: np.ndarray, temperature: float) -> np.ndarray:
     """
     return logits / temperature
 
-# Step 161 - top_k_filter (not yet solved)
-# TODO: implement
+# Step 161 - top_k_filter
+import numpy as np
+
+def top_k_filter(logits: np.ndarray, k: int) -> np.ndarray:
+    """
+    Keep only the k largest entries per row of logits, replacing every
+    other position with -inf.
+
+    Args:
+        logits (np.ndarray): Logits of shape (1, vocab_size).
+        k (int): Number of top entries to keep per row.
+
+    Returns:
+        np.ndarray: Filtered logits, same shape as logits, with non-top-k
+                    entries set to -inf and top-k entries unchanged.
+    """
+    vocab_size = logits.shape[-1]
+    k = min(k, vocab_size)
+
+    filtered = np.full_like(logits, -np.inf)
+
+    # Indices of the k largest values per row.
+    top_k_idx = np.argpartition(logits, -k, axis=-1)[:, -k:]
+
+    rows = np.arange(logits.shape[0])[:, None]
+    filtered[rows, top_k_idx] = logits[rows, top_k_idx]
+
+    return filtered
 
 # Step 162 - softmax_to_probs (not yet solved)
 # TODO: implement
