@@ -3360,8 +3360,29 @@ def adam_update_second_moment(v_prev: np.ndarray, grad: np.ndarray, beta2: float
     """
     return beta2 * v_prev + (1.0 - beta2) * (grad ** 2)
 
-# Step 152 - adam_bias_correction (not yet solved)
-# TODO: implement
+# Step 152 - adam_bias_correction
+# ── Step 152  adam_bias_correction ──
+import numpy as np
+
+def adam_bias_correction(m: np.ndarray, v: np.ndarray, beta1: float, beta2: float, t: int):
+    """
+    Debias Adam's first- and second-moment estimates at step t.
+
+    Args:
+        m (np.ndarray): Raw (biased) first-moment estimate.
+        v (np.ndarray): Raw (biased) second-moment estimate.
+        beta1 (float): First-moment decay rate.
+        beta2 (float): Second-moment decay rate.
+        t (int): Current step count (1-indexed).
+
+    Returns:
+        tuple: (m_hat, v_hat), the bias-corrected first- and
+               second-moment estimates, same shapes as m/v.
+    """
+    m_hat = m / (1.0 - beta1 ** t)
+    v_hat = v / (1.0 - beta2 ** t)
+
+    return m_hat, v_hat
 
 # Step 153 - adam_parameter_update (not yet solved)
 # TODO: implement
