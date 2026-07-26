@@ -2738,8 +2738,49 @@ def residual_backward(d_y):
 
     return d_x, d_sublayer_out
 
-# Step 137 - pre_layernorm_sublayer_forward (not yet solved)
-# TODO: implement
+# Step 137 - pre_layernorm_sublayer_forward
+def pre_layernorm_sublayer_forward(x, ln_params, sublayer_fn, sublayer_params, eps=1e-5):
+    """
+    Pre-LayerNorm sublayer wrapper used throughout a Transformer block.
+
+    Computes:
+        normed = LayerNorm(x)
+        sub_out = sublayer_fn(normed, sublayer_params)
+        y = x + sub_out   (residual connection)
+
+    Args:
+        x (np.ndarray): Input tensor, shape (B, T, d_model).
+        ln_params (dict): {'gamma': (d_model,), 'beta': (d_model,)}.
+        sublayer_fn (callable): Function taking (normed_x, sublayer_params)
+                                 and returning {'y': ..., 'cache': ...}.
+        sublayer_params: Parameters passed through to sublayer_fn.
+        eps (float): LayerNorm numerical stability constant.
+
+    Returns:
+        dict: {
+            'y': Output tensor of shape (B, T, d_model),
+            'cache': {
+                'x': x,
+                'ln_cache': cache from layernorm_forward_affine,
+                'sublayer_cache': cache from sublayer_fn,
+            }
+        }
+    """
+    ln_out = layernorm_forward_affine(x, ln_params['gamma'], ln_params['beta'], eps)
+    normed = ln_out['y']
+
+    sub_result = sublayer_fn(normed, sublayer_params)
+    sub_out = sub_result['y']
+
+    y = residual_forward(x, sub_out)
+
+    cache = {
+        'x': x,
+        'ln_cache': ln_out['cache'],
+        'sublayer_cache': sub_result['cache'],
+    }
+
+    return {'y': y, 'cache': cache}
 
 # Step 138 - transformer_block_forward (not yet solved)
 # TODO: implement
