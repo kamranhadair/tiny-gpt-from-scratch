@@ -3566,7 +3566,6 @@ def encode_prompt(prompt: str, stoi: dict[str, int]) -> np.ndarray:
     return np.array([ids], dtype=np.int64)
 
 # Step 157 - crop_context_to_block_size
-# ── Step 157  crop_context_to_block_size ──
 import numpy as np
 
 def crop_context_to_block_size(context: np.ndarray, block_size: int) -> np.ndarray:
