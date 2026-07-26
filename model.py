@@ -2635,7 +2635,6 @@ def ffn_linear_two_forward(a1, w2, b2):
     return {'h2': h2, 'cache': cache}
 
 # Step 134 - ffn_backward
-# ── Step 134  ffn_backward ──
 import numpy as np
 
 def ffn_backward(d_out, cache):
@@ -2702,8 +2701,20 @@ def ffn_backward(d_out, cache):
         "db2": db2,
     }
 
-# Step 135 - residual_forward (not yet solved)
-# TODO: implement
+# Step 135 - residual_forward
+def residual_forward(x, sublayer_out):
+    """
+    Add the sublayer output back to the input (residual/skip connection).
+
+    Args:
+        x (np.ndarray): Original input, shape (B, T, d_model).
+        sublayer_out (np.ndarray): Output of the sublayer (attention or FFN),
+                                    shape (B, T, d_model).
+
+    Returns:
+        np.ndarray: Elementwise sum of x and sublayer_out, shape (B, T, d_model).
+    """
+    return elementwise_add(x, sublayer_out)
 
 # Step 136 - residual_backward (not yet solved)
 # TODO: implement
