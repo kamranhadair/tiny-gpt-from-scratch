@@ -3715,8 +3715,39 @@ def append_token_to_sequence(context: np.ndarray, token_id: int) -> np.ndarray:
     new_token = np.array([[token_id]], dtype=context.dtype)
     return np.concatenate([context, new_token], axis=1)
 
-# Step 165 - generation_loop_for_n_steps (not yet solved)
-# TODO: implement
+# Step 165 - generation_loop_for_n_steps
+import numpy as np
+
+def generation_loop_for_n_steps(model_params, prompt_ids, n_new_tokens,
+                                  block_size, temperature, top_k, rng):
+    """
+    Autoregressively extend a prompt by n_new_tokens ids.
+
+    Args:
+        model_params (dict): Nested model parameter tree.
+        prompt_ids (np.ndarray): Starting context, shape (1, T0).
+        n_new_tokens (int): Number of new tokens to generate.
+        block_size (int): Maximum context length the model supports.
+        temperature (float): Sampling temperature.
+        top_k (int): Number of top logits to keep before sampling.
+        rng (np.random.Generator): Random number generator.
+
+    Returns:
+        np.ndarray: Extended token id array, shape (1, T0 + n_new_tokens).
+    """
+    context = prompt_ids
+
+    for _ in range(n_new_tokens):
+        cropped = crop_context_to_block_size(context, block_size)
+        logits = forward_to_get_logits(model_params, cropped)
+        last_logits = take_last_position_logits(logits)
+        scaled = apply_temperature(last_logits, temperature)
+        filtered = top_k_filter(scaled, top_k)
+        probs = softmax_to_probs(filtered)
+        next_id = sample_one_token(probs, rng)
+        context = append_token_to_sequence(context, next_id)
+
+    return context
 
 # Step 166 - decode_final_sequence (not yet solved)
 # TODO: implement
