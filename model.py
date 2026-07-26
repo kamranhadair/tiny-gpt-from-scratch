@@ -3547,8 +3547,23 @@ def logging_and_validation_loss(params, val_ids, block_size, batch_size, n_eval_
 
     return float(np.mean(losses))
 
-# Step 156 - encode_prompt (not yet solved)
-# TODO: implement
+# Step 156 - encode_prompt
+# ── Step 156  encode_prompt ──
+import numpy as np
+
+def encode_prompt(prompt: str, stoi: dict[str, int]) -> np.ndarray:
+    """
+    Encode a raw prompt string into a batch tensor of token ids.
+
+    Args:
+        prompt (str): Raw input prompt.
+        stoi (dict[str, int]): Character-to-index mapping.
+
+    Returns:
+        np.ndarray: Integer array of shape (1, T), where T = len(prompt).
+    """
+    ids = encode_string(prompt, stoi)
+    return np.array([ids], dtype=np.int64)
 
 # Step 157 - crop_context_to_block_size (not yet solved)
 # TODO: implement
