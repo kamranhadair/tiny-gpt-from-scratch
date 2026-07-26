@@ -3405,8 +3405,108 @@ def adam_parameter_update(param: np.ndarray, m_hat: np.ndarray, v_hat: np.ndarra
     """
     return param - lr * m_hat / (np.sqrt(v_hat) + eps)
 
-# Step 154 - wire_full_training_loop (not yet solved)
-# TODO: implement
+# Step 154 - wire_full_training_loop
+# ── Step 154  wire_full_training_loop ──
+import numpy as np
+
+def _adam_update_tree(params_node, grads_node, m_node, v_node, t, lr, beta1, beta2, eps):
+    """
+    Recursively walk parallel params/grads/m/v trees (dicts, lists, and
+    ndarray leaves) and apply one Adam update at every leaf.
+
+    Returns:
+        tuple: (new_params_node, new_m_node, new_v_node)
+    """
+    if isinstance(params_node, dict):
+        new_params = {}
+        new_m = {}
+        new_v = {}
+        for key in params_node:
+            new_params[key], new_m[key], new_v[key] = _adam_update_tree(
+                params_node[key], grads_node[key], m_node[key], v_node[key],
+                t, lr, beta1, beta2, eps
+            )
+        return new_params, new_m, new_v
+
+    elif isinstance(params_node, list):
+        new_params = []
+        new_m = []
+        new_v = []
+        for p_item, g_item, m_item, v_item in zip(params_node, grads_node, m_node, v_node):
+            up_p, up_m, up_v = _adam_update_tree(
+                p_item, g_item, m_item, v_item, t, lr, beta1, beta2, eps
+            )
+            new_params.append(up_p)
+            new_m.append(up_m)
+            new_v.append(up_v)
+        return new_params, new_m, new_v
+
+    elif isinstance(params_node, np.ndarray):
+        new_m = adam_update_first_moment(m_node, grads_node, beta1)
+        new_v = adam_update_second_moment(v_node, grads_node, beta2)
+        m_hat, v_hat = adam_bias_correction(new_m, new_v, beta1, beta2, t)
+        new_params = adam_parameter_update(params_node, m_hat, v_hat, lr, eps)
+        return new_params, new_m, new_v
+
+    else:
+        # Non-array, non-container leaf: nothing to update.
+        return params_node, m_node, v_node
+
+
+def _bridge_emb_cache_key(caches):
+    """
+    full_model_forward may store the token-embedding cache under
+    'tok_emb_cache' while full_model_backward expects 'tok_cache'.
+    Bridge the two names without touching either earlier step.
+    """
+    emb_cache = caches.get('emb', {})
+    if 'tok_cache' not in emb_cache and 'tok_emb_cache' in emb_cache:
+        emb_cache['tok_cache'] = emb_cache['tok_emb_cache']
+    return caches
+
+
+def wire_full_training_loop(params, train_ids, val_ids, block_size, batch_size,
+                             n_steps, lr, betas, eps):
+    """
+    Drive the full GPT training loop for n_steps iterations using Adam.
+
+    Returns:
+        tuple:
+            params (dict): Updated parameter tree after n_steps of training.
+            history (list[dict]): [{'step': step, 'train_loss': loss}, ...]
+    """
+    beta1, beta2 = betas
+    rng = np.random.default_rng()
+
+    m, v = initialize_adam_moments(params)
+    t = initialize_adam_step_counter()
+
+    history = []
+
+    for step in range(n_steps):
+        X, Y = get_batch(train_ids, block_size, batch_size, rng)
+
+        logits, caches = full_model_forward(X, params)
+        caches = _bridge_emb_cache_key(caches)
+
+        B, T, V = logits.shape
+        logits_flat = logits.reshape(B * T, V)
+        targets_flat = Y.reshape(-1)
+
+        probs_flat = logits_to_probs_rowwise(logits_flat)
+        loss = cross_entropy_loss(probs_flat, targets_flat)
+
+        dlogits_flat = compute_dlogits(probs_flat, targets_flat)
+        dlogits = dlogits_flat.reshape(B, T, V)
+
+        grads = full_model_backward(dlogits, caches, params)
+
+        t = adam_increment_step(t)
+        params, m, v = _adam_update_tree(params, grads, m, v, t, lr, beta1, beta2, eps)
+
+        history.append({'step': step, 'train_loss': float(loss)})
+
+    return params, history
 
 # Step 155 - logging_and_validation_loss (not yet solved)
 # TODO: implement
