@@ -2905,8 +2905,69 @@ def transformer_block_forward(x, block_params):
         },
     }
 
-# Step 139 - transformer_block_backward (not yet solved)
-# TODO: implement
+# Step 139 - transformer_block_backward
+def transformer_block_backward(d_y, cache, block_params):
+    """
+    Backward pass through one pre-LN Transformer block.
+
+    Forward path:
+        h1 = x + Attn(LN1(x))
+        y  = h1 + FFN(LN2(h1))
+
+    Args:
+        d_y (np.ndarray): Upstream gradient w.r.t. the block output y,
+                           shape (B, T, d_model).
+        cache: cache produced alongside x by the forward pass (only used
+               to recover x for _complete_block_cache).
+        block_params (dict): {'ln1', 'attn', 'ln2', 'ffn'} as used by
+                              transformer_block_forward.
+
+    Returns:
+        tuple: (d_x, grads)
+            d_x: gradient w.r.t. the block input x, same shape as x.
+            grads: {
+                'ln1': {'gamma', 'beta'},
+                'ln2': {'gamma', 'beta'},
+                'attn': {'Wq', 'Wk', 'Wv', 'Wo', 'bo'},
+                'ffn': {'w1', 'b1', 'w2', 'b2'},
+            }
+    """
+    x = cache['attn_branch']['x']
+    full_cache = _complete_block_cache(x, block_params)
+
+    attn_branch = full_cache['attn_branch']
+    ffn_branch = full_cache['ffn_branch']
+
+    # --- FFN branch: y = h1 + FFN(LN2(h1)) ---
+    d_ffn_out, ffn_grads = _ffn_sublayer_backward(
+        d_y, ffn_branch['sublayer_cache'], block_params['ffn']
+    )
+    d_ln2_x, d_gamma2, d_beta2 = layernorm_backward_affine(
+        d_ffn_out, ffn_branch['ln_cache']
+    )
+    # Residual skip: d_h1 gets contributions from the skip (d_y) and from
+    # the sublayer branch (d_ln2_x).
+    d_h1 = d_y + d_ln2_x
+
+    # --- Attention branch: h1 = x + Attn(LN1(x)) ---
+    d_attn_out, attn_grads = _attn_sublayer_backward(
+        d_h1, attn_branch['sublayer_cache'], block_params['attn']
+    )
+    d_ln1_x, d_gamma1, d_beta1 = layernorm_backward_affine(
+        d_attn_out, attn_branch['ln_cache']
+    )
+    # Residual skip: d_x gets contributions from the skip (d_h1) and from
+    # the sublayer branch (d_ln1_x).
+    d_x = d_h1 + d_ln1_x
+
+    grads = {
+        'ln1': {'gamma': d_gamma1, 'beta': d_beta1},
+        'ln2': {'gamma': d_gamma2, 'beta': d_beta2},
+        'attn': attn_grads,
+        'ffn': ffn_grads,
+    }
+
+    return d_x, grads
 
 # Step 140 - stack_transformer_blocks (not yet solved)
 # TODO: implement
