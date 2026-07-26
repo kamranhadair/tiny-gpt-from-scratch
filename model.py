@@ -3308,8 +3308,20 @@ def initialize_adam_step_counter() -> int:
     """
     return 0
 
-# Step 149 - adam_increment_step (not yet solved)
-# TODO: implement
+# Step 149 - adam_increment_step
+# ── Step 149  adam_increment_step ──
+def adam_increment_step(t: int) -> int:
+    """
+    Advance Adam's time-step counter by one.
+
+    Args:
+        t (int): Current step count.
+
+    Returns:
+        int: t + 1, the step count to use for the upcoming update's
+             bias correction.
+    """
+    return t + 1
 
 # Step 150 - adam_update_first_moment (not yet solved)
 # TODO: implement
