@@ -3361,7 +3361,6 @@ def adam_update_second_moment(v_prev: np.ndarray, grad: np.ndarray, beta2: float
     return beta2 * v_prev + (1.0 - beta2) * (grad ** 2)
 
 # Step 152 - adam_bias_correction
-# ── Step 152  adam_bias_correction ──
 import numpy as np
 
 def adam_bias_correction(m: np.ndarray, v: np.ndarray, beta1: float, beta2: float, t: int):
