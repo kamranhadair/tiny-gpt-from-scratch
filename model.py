@@ -3342,8 +3342,23 @@ def adam_update_first_moment(m: np.ndarray, grad: np.ndarray, beta1: float) -> n
     """
     return beta1 * m + (1.0 - beta1) * grad
 
-# Step 151 - adam_update_second_moment (not yet solved)
-# TODO: implement
+# Step 151 - adam_update_second_moment
+import numpy as np
+
+def adam_update_second_moment(v_prev: np.ndarray, grad: np.ndarray, beta2: float) -> np.ndarray:
+    """
+    Update Adam's second-moment estimate via an exponential moving average
+    of the squared gradient.
+
+    Args:
+        v_prev (np.ndarray): Previous second-moment estimate, same shape as grad.
+        grad (np.ndarray): Current gradient.
+        beta2 (float): Second-moment decay rate.
+
+    Returns:
+        np.ndarray: Updated second-moment estimate, same shape as v_prev/grad.
+    """
+    return beta2 * v_prev + (1.0 - beta2) * (grad ** 2)
 
 # Step 152 - adam_bias_correction (not yet solved)
 # TODO: implement
