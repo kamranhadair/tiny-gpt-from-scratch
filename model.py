@@ -2716,8 +2716,27 @@ def residual_forward(x, sublayer_out):
     """
     return elementwise_add(x, sublayer_out)
 
-# Step 136 - residual_backward (not yet solved)
-# TODO: implement
+# Step 136 - residual_backward
+import numpy as np
+
+def residual_backward(d_y):
+    """
+    Backward pass for a residual connection y = x + sublayer_out.
+
+    The gradient flows unchanged to both branches, since d(x + s)/dx = 1
+    and d(x + s)/ds = 1.
+
+    Args:
+        d_y (np.ndarray): Upstream gradient, shape (B, T, d_model).
+
+    Returns:
+        tuple: (d_x, d_sublayer_out), each a standalone copy of d_y with
+               shape (B, T, d_model).
+    """
+    d_x = d_y.copy()
+    d_sublayer_out = d_y.copy()
+
+    return d_x, d_sublayer_out
 
 # Step 137 - pre_layernorm_sublayer_forward (not yet solved)
 # TODO: implement
