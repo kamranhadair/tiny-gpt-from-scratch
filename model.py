@@ -3565,8 +3565,30 @@ def encode_prompt(prompt: str, stoi: dict[str, int]) -> np.ndarray:
     ids = encode_string(prompt, stoi)
     return np.array([ids], dtype=np.int64)
 
-# Step 157 - crop_context_to_block_size (not yet solved)
-# TODO: implement
+# Step 157 - crop_context_to_block_size
+# ── Step 157  crop_context_to_block_size ──
+import numpy as np
+
+def crop_context_to_block_size(context: np.ndarray, block_size: int) -> np.ndarray:
+    """
+    Keep only the most recent block_size tokens of a running context.
+
+    Args:
+        context (np.ndarray): Integer array of shape (1, T).
+        block_size (int): Maximum context length supported by the model's
+                           positional embeddings.
+
+    Returns:
+        np.ndarray: Array of shape (1, min(T, block_size)), containing the
+                    tail of context if T > block_size, otherwise context
+                    unchanged.
+    """
+    T = context.shape[1]
+
+    if T <= block_size:
+        return context
+
+    return context[:, T - block_size:]
 
 # Step 158 - forward_to_get_logits (not yet solved)
 # TODO: implement
