@@ -3406,7 +3406,6 @@ def adam_parameter_update(param: np.ndarray, m_hat: np.ndarray, v_hat: np.ndarra
     return param - lr * m_hat / (np.sqrt(v_hat) + eps)
 
 # Step 154 - wire_full_training_loop
-# ── Step 154  wire_full_training_loop ──
 import numpy as np
 
 def _adam_update_tree(params_node, grads_node, m_node, v_node, t, lr, beta1, beta2, eps):
