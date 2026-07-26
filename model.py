@@ -3611,8 +3611,20 @@ def forward_to_get_logits(model_params, context):
     logits, _ = full_model_forward(context, model_params)
     return logits
 
-# Step 159 - take_last_position_logits (not yet solved)
-# TODO: implement
+# Step 159 - take_last_position_logits
+import numpy as np
+
+def take_last_position_logits(logits: np.ndarray) -> np.ndarray:
+    """
+    Extract the logits at the final time step of a sequence.
+
+    Args:
+        logits (np.ndarray): Logits of shape (1, T, vocab_size).
+
+    Returns:
+        np.ndarray: Logits at the last position, shape (1, vocab_size).
+    """
+    return logits[:, -1, :]
 
 # Step 160 - apply_temperature (not yet solved)
 # TODO: implement
