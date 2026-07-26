@@ -3309,7 +3309,6 @@ def initialize_adam_step_counter() -> int:
     return 0
 
 # Step 149 - adam_increment_step
-# ── Step 149  adam_increment_step ──
 def adam_increment_step(t: int) -> int:
     """
     Advance Adam's time-step counter by one.
