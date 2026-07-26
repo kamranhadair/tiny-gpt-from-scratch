@@ -3699,8 +3699,23 @@ def sample_one_token(probs: np.ndarray, rng: np.random.Generator) -> int:
     vocab_size = probs.shape[-1]
     return int(rng.choice(vocab_size, p=probs[0]))
 
-# Step 164 - append_token_to_sequence (not yet solved)
-# TODO: implement
+# Step 164 - append_token_to_sequence
+import numpy as np
+
+def append_token_to_sequence(context: np.ndarray, token_id: int) -> np.ndarray:
+    """
+    Grow a running context tensor by one token.
+
+    Args:
+        context (np.ndarray): Integer array of shape (1, T).
+        token_id (int): The newly sampled token id to append.
+
+    Returns:
+        np.ndarray: New array of shape (1, T+1), with token_id appended
+                    as the final column.
+    """
+    new_token = np.array([[token_id]], dtype=context.dtype)
+    return np.concatenate([context, new_token], axis=1)
 
 # Step 165 - generation_loop_for_n_steps (not yet solved)
 # TODO: implement
