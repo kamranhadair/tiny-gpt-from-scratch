@@ -3262,8 +3262,39 @@ def full_model_backward(d_logits, caches, model_params):
         'lm_head': {'w_lm': dw_lm, 'b_lm': db_lm},
     }
 
-# Step 147 - initialize_adam_moments (not yet solved)
-# TODO: implement
+# Step 147 - initialize_adam_moments
+import numpy as np
+
+def initialize_adam_moments(model_params):
+    """
+    Allocate zeroed first- and second-moment buffers mirroring the
+    structure of a (possibly nested) parameter dictionary/list tree.
+
+    Args:
+        model_params: A nested structure of dicts / lists whose leaves are
+                       NumPy arrays (e.g. model_params as used throughout
+                       this project).
+
+    Returns:
+        tuple: (m, v), each a structure parallel to model_params where
+               every array leaf is replaced with np.zeros_like(leaf).
+    """
+    def _zeros_like_tree(node):
+        if isinstance(node, dict):
+            return {key: _zeros_like_tree(value) for key, value in node.items()}
+        elif isinstance(node, list):
+            return [_zeros_like_tree(item) for item in node]
+        elif isinstance(node, np.ndarray):
+            return np.zeros_like(node)
+        else:
+            # Non-array, non-container leaf (e.g. plain int/float config
+            # value) — leave it untouched, no moment buffer needed for it.
+            return node
+
+    m = _zeros_like_tree(model_params)
+    v = _zeros_like_tree(model_params)
+
+    return m, v
 
 # Step 148 - initialize_adam_step_counter (not yet solved)
 # TODO: implement
