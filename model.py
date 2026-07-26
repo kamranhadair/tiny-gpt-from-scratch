@@ -3196,8 +3196,71 @@ def full_model_forward(token_ids, model_params):
 
     return logits, caches
 
-# Step 146 - full_model_backward (not yet solved)
-# TODO: implement
+# Step 146 - full_model_backward
+import numpy as np
+
+def full_model_backward(d_logits, caches, model_params):
+    """
+    Propagate gradients from the LM head logits back to every parameter
+    in the Tiny GPT model, mirroring model_params's nested structure.
+    """
+    B, T, V = d_logits.shape
+
+    # --- LM head linear backward: logits = x @ w_lm + b_lm ---
+    lm_x = caches['lm_head']['x']
+    lm_w = caches['lm_head']['w_lm']
+    d_model = lm_x.shape[-1]
+
+    d_logits_flat = d_logits.reshape(B * T, V)
+    lm_cache = {'x': lm_x.reshape(B * T, d_model), 'w': lm_w}
+
+    dw_lm = linear_backward_dw(d_logits_flat, lm_cache)
+    dx_lm_flat = linear_backward_dx(d_logits_flat, lm_cache)
+    db_lm = bias_add_backward_db(d_logits_flat, {'b_shape': (V,)})
+
+    d_ln_f_out = dx_lm_flat.reshape(B, T, d_model)
+
+    # --- Final LayerNorm backward (manual, since the cache has no 'eps') ---
+    ln_cache = caches['ln_f']
+    x_hat = ln_cache['x_hat']
+    var = ln_cache['var']
+    gamma = ln_cache['gamma']
+    eps = 1e-5
+    D = x_hat.shape[-1]
+
+    dbeta_f = d_ln_f_out.sum(axis=(0, 1))
+    dgamma_f = (d_ln_f_out * x_hat).sum(axis=(0, 1))
+
+    dxhat = d_ln_f_out * gamma
+    inv_std = 1.0 / np.sqrt(var + eps)
+    d_blocks_out = (inv_std / D) * (
+        D * dxhat
+        - dxhat.sum(axis=-1, keepdims=True)
+        - x_hat * (dxhat * x_hat).sum(axis=-1, keepdims=True)
+    )
+
+    # --- Transformer block stack backward ---
+    d_emb, block_grads = backward_through_all_blocks(
+        d_blocks_out, caches['blocks'], model_params['blocks']
+    )
+
+    # --- Embedding sum backward: x = tok_emb[token_ids] + pos_emb[:T] ---
+    token_ids = caches['emb']['tok_cache']['token_ids']
+    seq_len = caches['emb']['seq_len']
+
+    d_tok_emb = np.zeros_like(model_params['tok_emb'])
+    np.add.at(d_tok_emb, token_ids, d_emb)
+
+    d_pos_emb = np.zeros_like(model_params['pos_emb'])
+    d_pos_emb[:seq_len] = d_emb.sum(axis=0)
+
+    return {
+        'tok_emb': d_tok_emb,
+        'pos_emb': d_pos_emb,
+        'blocks': block_grads,
+        'ln_f': {'gamma': dgamma_f, 'beta': dbeta_f},
+        'lm_head': {'w_lm': dw_lm, 'b_lm': db_lm},
+    }
 
 # Step 147 - initialize_adam_moments (not yet solved)
 # TODO: implement
