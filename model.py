@@ -3680,8 +3680,24 @@ def softmax_to_probs(logits):
     """
     return stable_softmax_2d_rowwise(logits)
 
-# Step 163 - sample_one_token (not yet solved)
-# TODO: implement
+# Step 163 - sample_one_token
+# ── Step 163  sample_one_token ──
+import numpy as np
+
+def sample_one_token(probs: np.ndarray, rng: np.random.Generator) -> int:
+    """
+    Draw a single next-token id from a categorical distribution.
+
+    Args:
+        probs (np.ndarray): Probability distribution of shape (1, vocab_size),
+                             row sums to 1.
+        rng (np.random.Generator): Random number generator.
+
+    Returns:
+        int: Sampled token id.
+    """
+    vocab_size = probs.shape[-1]
+    return int(rng.choice(vocab_size, p=probs[0]))
 
 # Step 164 - append_token_to_sequence (not yet solved)
 # TODO: implement
