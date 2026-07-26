@@ -2969,8 +2969,70 @@ def transformer_block_backward(d_y, cache, block_params):
 
     return d_x, grads
 
-# Step 140 - stack_transformer_blocks (not yet solved)
-# TODO: implement
+# Step 140 - stack_transformer_blocks
+def stack_transformer_blocks(n_layers, d_model, n_heads, d_ff, scale=0.02):
+    """
+    Build the parameter dictionaries for a stack of Transformer blocks.
+
+    Args:
+        n_layers (int): Number of Transformer blocks to create.
+        d_model (int): Model (embedding) dimension.
+        n_heads (int): Number of attention heads.
+        d_ff (int): Hidden dimension of the feed-forward network.
+        scale (float): Scaling factor for weight initialization.
+
+    Returns:
+        list[dict]: A list of length n_layers, where each entry is:
+            {
+                'ln1': {'gamma': ones(d_model), 'beta': zeros(d_model)},
+                'attn': {
+                    'Wq': (d_model, d_model), 'Wk': (d_model, d_model),
+                    'Wv': (d_model, d_model), 'Wo': (d_model, d_model),
+                    'bo': zeros(d_model),
+                },
+                'ln2': {'gamma': ones(d_model), 'beta': zeros(d_model)},
+                'ffn': {
+                    'W1': (d_model, d_ff), 'b1': zeros(d_ff),
+                    'W2': (d_ff, d_model), 'b2': zeros(d_model),
+                },
+            }
+    """
+    blocks = []
+
+    for _ in range(n_layers):
+        ln1 = {
+            'gamma': np.ones(d_model),
+            'beta': np.zeros(d_model),
+        }
+
+        attn = {
+            'Wq': scale_w_small(make_2d_random(d_model, d_model, seed=0), scale),
+            'Wk': scale_w_small(make_2d_random(d_model, d_model, seed=1), scale),
+            'Wv': scale_w_small(make_2d_random(d_model, d_model, seed=2), scale),
+            'Wo': scale_w_small(make_2d_random(d_model, d_model, seed=3), scale),
+            'bo': np.zeros(d_model),
+        }
+
+        ln2 = {
+            'gamma': np.ones(d_model),
+            'beta': np.zeros(d_model),
+        }
+
+        ffn = {
+            'W1': scale_w_small(make_2d_random(d_model, d_ff, seed=4), scale),
+            'b1': np.zeros(d_ff),
+            'W2': scale_w_small(make_2d_random(d_ff, d_model, seed=5), scale),
+            'b2': np.zeros(d_model),
+        }
+
+        blocks.append({
+            'ln1': ln1,
+            'attn': attn,
+            'ln2': ln2,
+            'ffn': ffn,
+        })
+
+    return blocks
 
 # Step 141 - forward_through_all_blocks (not yet solved)
 # TODO: implement
