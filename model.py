@@ -2634,8 +2634,73 @@ def ffn_linear_two_forward(a1, w2, b2):
 
     return {'h2': h2, 'cache': cache}
 
-# Step 134 - ffn_backward (not yet solved)
-# TODO: implement
+# Step 134 - ffn_backward
+# ── Step 134  ffn_backward ──
+import numpy as np
+
+def ffn_backward(d_out, cache):
+    """
+    Backward pass through the position-wise feed-forward sublayer.
+
+    Forward path:
+        h1 = x @ w1 + b1
+        a1 = relu(h1)
+        y  = a1 @ w2 + b2
+
+    Args:
+        d_out (np.ndarray): Upstream gradient w.r.t. y, shape (B, T, d_model).
+        cache (dict): Contains 'x', 'w1', 'h1', 'a1', 'w2'
+                      (shapes (B,T,d_model), (d_model,d_ff), (B,T,d_ff),
+                       (B,T,d_ff), (d_ff,d_model) respectively).
+
+    Returns:
+        dict: {
+            "dx": gradient w.r.t. x, shape (B, T, d_model),
+            "dw1": gradient w.r.t. w1, shape (d_model, d_ff),
+            "db1": gradient w.r.t. b1, shape (d_ff,),
+            "dw2": gradient w.r.t. w2, shape (d_ff, d_model),
+            "db2": gradient w.r.t. b2, shape (d_model,),
+        }
+    """
+    x = cache["x"]
+    w1 = cache["w1"]
+    h1 = cache["h1"]
+    a1 = cache["a1"]
+    w2 = cache["w2"]
+
+    B, T, d_model = x.shape
+    d_ff = w1.shape[1]
+
+    # Flatten leading (B, T) axes into a single batch axis for the 2D primitives.
+    x_flat = x.reshape(B * T, d_model)
+    h1_flat = h1.reshape(B * T, d_ff)
+    a1_flat = a1.reshape(B * T, d_ff)
+    d_out_flat = d_out.reshape(B * T, d_model)
+
+    # --- Second linear layer: y = a1 @ w2 + b2 ---
+    cache2 = {"x": a1_flat, "w": w2}
+    dw2 = linear_backward_dw(d_out_flat, cache2)
+    da1_flat = linear_backward_dx(d_out_flat, cache2)
+    db2 = bias_add_backward_db(d_out_flat, {"b_shape": (d_model,)})
+
+    # --- ReLU activation: a1 = relu(h1) ---
+    dh1_flat = relu_backward(da1_flat, {"x": h1_flat})
+
+    # --- First linear layer: h1 = x @ w1 + b1 ---
+    cache1 = {"x": x_flat, "w": w1}
+    dw1 = linear_backward_dw(dh1_flat, cache1)
+    dx_flat = linear_backward_dx(dh1_flat, cache1)
+    db1 = bias_add_backward_db(dh1_flat, {"b_shape": (d_ff,)})
+
+    dx = dx_flat.reshape(B, T, d_model)
+
+    return {
+        "dx": dx,
+        "dw1": dw1,
+        "db1": db1,
+        "dw2": dw2,
+        "db2": db2,
+    }
 
 # Step 135 - residual_forward (not yet solved)
 # TODO: implement
