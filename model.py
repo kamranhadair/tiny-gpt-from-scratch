@@ -3061,8 +3061,36 @@ def forward_through_all_blocks(x, blocks):
 
     return y, caches
 
-# Step 142 - backward_through_all_blocks (not yet solved)
-# TODO: implement
+# Step 142 - backward_through_all_blocks
+def backward_through_all_blocks(d_y, caches, blocks):
+    """
+    Propagate an upstream gradient back through a stack of Transformer blocks.
+
+    Args:
+        d_y (np.ndarray): Upstream gradient w.r.t. the stack's output,
+                           shape (B, T, d_model).
+        caches (list[dict]): Per-block forward caches, in block order
+                              (as produced by forward_through_all_blocks).
+        blocks (list[dict]): Per-block parameter dicts, in block order,
+                              aligned with `caches`.
+
+    Returns:
+        tuple:
+            d_x (np.ndarray): Gradient w.r.t. the stack's input, same
+                               shape as d_y.
+            grads (list[dict]): Per-block parameter gradient dicts, in
+                                 the same order as `blocks`.
+    """
+    d_current = d_y
+    grads_reversed = []
+
+    for cache, block_params in zip(reversed(caches), reversed(blocks)):
+        d_current, block_grads = transformer_block_backward(d_current, cache, block_params)
+        grads_reversed.append(block_grads)
+
+    grads = list(reversed(grads_reversed))
+
+    return d_current, grads
 
 # Step 143 - final_layernorm_forward (not yet solved)
 # TODO: implement
