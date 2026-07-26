@@ -3384,8 +3384,26 @@ def adam_bias_correction(m: np.ndarray, v: np.ndarray, beta1: float, beta2: floa
 
     return m_hat, v_hat
 
-# Step 153 - adam_parameter_update (not yet solved)
-# TODO: implement
+# Step 153 - adam_parameter_update
+import numpy as np
+
+def adam_parameter_update(param: np.ndarray, m_hat: np.ndarray, v_hat: np.ndarray,
+                            lr: float, eps: float) -> np.ndarray:
+    """
+    Apply the final Adam update to a single parameter tensor.
+
+    Args:
+        param (np.ndarray): Current parameter values.
+        m_hat (np.ndarray): Bias-corrected first-moment estimate.
+        v_hat (np.ndarray): Bias-corrected second-moment estimate.
+        lr (float): Learning rate.
+        eps (float): Small constant for numerical stability.
+
+    Returns:
+        np.ndarray: Updated parameter array, same shape as param. A fresh
+                    array is returned; param is not modified in place.
+    """
+    return param - lr * m_hat / (np.sqrt(v_hat) + eps)
 
 # Step 154 - wire_full_training_loop (not yet solved)
 # TODO: implement
