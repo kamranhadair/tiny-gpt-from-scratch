@@ -3129,8 +3129,34 @@ def final_layernorm_forward(x, gamma, beta, eps=1e-5):
 
     return ln_out['y'], cache
 
-# Step 144 - lm_head_linear_forward (not yet solved)
-# TODO: implement
+# Step 144 - lm_head_linear_forward
+def lm_head_linear_forward(x, w_lm, b_lm):
+    """
+    Language model head: project final hidden states to vocabulary logits.
+
+    Args:
+        x (np.ndarray): Final hidden states, shape (B, T, d_model).
+        w_lm (np.ndarray): LM head weight matrix, shape (d_model, vocab_size).
+        b_lm (np.ndarray): LM head bias vector, shape (vocab_size,).
+
+    Returns:
+        dict: {
+            "logits": Output tensor of shape (B, T, vocab_size),
+            "cache": {
+                "x": x,
+                "w_lm": w_lm,
+            }
+        }
+    """
+    lin_out = linear_forward(x, w_lm)
+    biased_out = bias_add_forward(lin_out['y'], b_lm)
+
+    cache = {
+        "x": x,
+        "w_lm": w_lm,
+    }
+
+    return {"logits": biased_out['y'], "cache": cache}
 
 # Step 145 - full_model_forward (not yet solved)
 # TODO: implement
