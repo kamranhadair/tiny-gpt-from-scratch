@@ -3681,7 +3681,6 @@ def softmax_to_probs(logits):
     return stable_softmax_2d_rowwise(logits)
 
 # Step 163 - sample_one_token
-# ── Step 163  sample_one_token ──
 import numpy as np
 
 def sample_one_token(probs: np.ndarray, rng: np.random.Generator) -> int:
