@@ -3323,8 +3323,24 @@ def adam_increment_step(t: int) -> int:
     """
     return t + 1
 
-# Step 150 - adam_update_first_moment (not yet solved)
-# TODO: implement
+# Step 150 - adam_update_first_moment
+# ── Step 150  adam_update_first_moment ──
+import numpy as np
+
+def adam_update_first_moment(m: np.ndarray, grad: np.ndarray, beta1: float) -> np.ndarray:
+    """
+    Update Adam's first-moment estimate via an exponential moving average
+    of the gradient.
+
+    Args:
+        m (np.ndarray): Previous first-moment estimate, same shape as grad.
+        grad (np.ndarray): Current gradient.
+        beta1 (float): First-moment decay rate.
+
+    Returns:
+        np.ndarray: Updated first-moment estimate, same shape as m/grad.
+    """
+    return beta1 * m + (1.0 - beta1) * grad
 
 # Step 151 - adam_update_second_moment (not yet solved)
 # TODO: implement
