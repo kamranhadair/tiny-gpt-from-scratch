@@ -3749,6 +3749,19 @@ def generation_loop_for_n_steps(model_params, prompt_ids, n_new_tokens,
 
     return context
 
-# Step 166 - decode_final_sequence (not yet solved)
-# TODO: implement
+# Step 166 - decode_final_sequence
+# ── Step 166  decode_final_sequence ──
+def decode_final_sequence(generated_ids, itos: dict[int, str]) -> str:
+    """
+    Decode a (1, T) token id array back into a string.
+
+    Args:
+        generated_ids (np.ndarray): Integer array of shape (1, T).
+        itos (dict[int, str]): Integer-to-character mapping.
+
+    Returns:
+        str: Decoded string for the single row.
+    """
+    flat_ids = generated_ids[0].tolist()
+    return decode_ids(flat_ids, itos)
 
