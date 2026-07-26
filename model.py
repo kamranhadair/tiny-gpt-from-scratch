@@ -3664,7 +3664,6 @@ def top_k_filter(logits: np.ndarray, k: int) -> np.ndarray:
     return filtered
 
 # Step 162 - softmax_to_probs
-# ── Step 162  softmax_to_probs ──
 def softmax_to_probs(logits):
     """
     Convert filtered logits (possibly containing -inf at masked positions)
