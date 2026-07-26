@@ -3548,7 +3548,6 @@ def logging_and_validation_loss(params, val_ids, block_size, batch_size, n_eval_
     return float(np.mean(losses))
 
 # Step 156 - encode_prompt
-# ── Step 156  encode_prompt ──
 import numpy as np
 
 def encode_prompt(prompt: str, stoi: dict[str, int]) -> np.ndarray:
