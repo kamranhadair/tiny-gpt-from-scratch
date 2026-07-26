@@ -3590,8 +3590,26 @@ def crop_context_to_block_size(context: np.ndarray, block_size: int) -> np.ndarr
 
     return context[:, T - block_size:]
 
-# Step 158 - forward_to_get_logits (not yet solved)
-# TODO: implement
+# Step 158 - forward_to_get_logits
+# ── Step 158  forward_to_get_logits ──
+def forward_to_get_logits(model_params, context):
+    """
+    Thin inference-mode wrapper around the full model forward pass.
+
+    Runs the complete Tiny GPT forward pipeline and returns only the
+    logits, discarding the intermediate caches since backprop isn't
+    needed at generation time.
+
+    Args:
+        model_params (dict): Nested model parameter tree, as consumed by
+                              full_model_forward.
+        context (np.ndarray): Integer token id array of shape (1, T).
+
+    Returns:
+        np.ndarray: Logits of shape (1, T, vocab_size).
+    """
+    logits, _ = full_model_forward(context, model_params)
+    return logits
 
 # Step 159 - take_last_position_logits (not yet solved)
 # TODO: implement
